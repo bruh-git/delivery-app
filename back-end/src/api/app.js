@@ -1,8 +1,12 @@
+require('express-async-errors');
 const express = require('express');
-// Iniciando o projeto
+const loginRouter = require('./routes/loginRouter');
+const errorHandler = require('./middlewares/error');
 
 const app = express();
-
-app.get('/coffee', (_req, res) => res.status(418).end());
+app.use(express.json());
+ 
+app.use('/', loginRouter);
+app.use(errorHandler);
 
 module.exports = app;
