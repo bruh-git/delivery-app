@@ -13,19 +13,19 @@ function Login(props) {
     disableButton,
   } = useContext(AuthContext);
 
-  async function handleClick(event) {
-    event.preventdefault();
+  const handleClick = async (event) => {
+    event.preventDefault();
     const response = await loginUser(Login);
     if ('message' in response) {
       window.alert(response.message);
       return null;
     }
-  }
+  };
 
-  function handleClickRegister() {
+  const handleClickRegister = () => {
     const { history } = props;
     history.push('/register');
-  }
+  };
 
   return (
     <div className="LoginPage">
@@ -49,7 +49,7 @@ function Login(props) {
           onChange={ ({ target }) => setPassword(target.value) }
         />
         <button
-          type="submit"
+          type="button"
           data-testid="common_login__button-login"
           onClick={ handleClick }
           disabled={ disableButton }
@@ -57,7 +57,7 @@ function Login(props) {
           LOGIN
         </button>
         <button
-          type="submit"
+          type="button"
           data-testid="common_login__button-register"
           onClick={ handleClickRegister }
         >
