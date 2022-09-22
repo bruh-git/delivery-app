@@ -19,12 +19,12 @@ class LoginService {
 
   static async login(email, password) {
     const user = await User.findOne({
-      attributes: ['email', 'password', 'role'],
+      attributes: ['email', 'password', 'role', 'name'],
       where: { email },
     });
     const checkPassword = md5(password) === user.password;
     if (!user || !checkPassword) throw new CustomError('Not found', 404);
-    const token = jwtService.createToken({ email, password });
+    const token = jwtService.createToken({ email, name: user.name });
     const { role } = user;
 
     return { token, role };
