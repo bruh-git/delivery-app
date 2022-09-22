@@ -5,7 +5,7 @@ const { User } = require('../../database/models');
 const jwtService = require('./JwtService');
 
 class LoginService {
-  async validateBody(data) {
+  static async validateBody(data) {
     const schema = Joi.object({
       email: Joi.string().email().required(),
       password: Joi.string().required(),
@@ -17,14 +17,13 @@ class LoginService {
     return value;
   }
 
-  async login(email, password) {
+  static async login(email, password) {
     const user = await User.findOne({
       attributes: ['email', 'password', 'role'],
       where: { email },
     });
-    const crypt = md5(password) === user.password;
-    console.log({ body: md5(password), db: user.password });
-    if (!user || !crypt) throw new CustomError('Not found', 404);
+    const checkPassword = md5(password) === user.password;
+    if (!user || !checkPassword) throw new CustomError('Not found', 404);
     const token = jwtService.createToken({ email, password });
     const { role } = user;
 

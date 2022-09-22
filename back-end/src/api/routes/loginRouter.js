@@ -3,8 +3,9 @@ const LoginController = require('../controllers/LoginController');
 
 const router = Router();
 
-const loginController = new LoginController();
+// Usando somente método estático login, sem necessidade de instanciamento por ora
+// const loginController = new LoginController();
 
-router.post('/', (req, res) => loginController.login(req, res));
+router.post('/', (req, res) => LoginController.login(req, res));
 
 module.exports = router;

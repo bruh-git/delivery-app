@@ -5,13 +5,14 @@ class LoginController {
     this.service = service;
   }
 
-  async login(req, res) {
+  static async login(req, res) {
     const { email, password } = req.body;
-    await this.service.validateBody({ email, password });
-    const { token, role } = await this.service.login(email, password);
+    await LoginService.validateBody({ email, password });
+    const { token, role } = await LoginService.login(email, password);
     return res.status(200).json({ token, role });
   }
 
+  // Ainda não implementado =>
   async validation(req, res) {
     const { authorization } = req.headers;
     if (!authorization) {
