@@ -7,8 +7,8 @@ function Login() {
   const {
     email, setEmail, password, setPassword, disableButton } = useContext(AuthContext);
 
-  async function handleClick(event) {
-    event.preventdefault();
+  const handleClick = async (event) => {
+    event.preventDefault();
     const response = await loginUser(Login);
 
     if ('message' in response) {
@@ -18,7 +18,16 @@ function Login() {
     if (response.message === 'Not Found') {
       alert('Usuário não encontrado');
     }
+<<<<<<< HEAD
   }
+=======
+  };
+
+  const handleClickRegister = () => {
+    const { history } = props;
+    history.push('/register');
+  };
+>>>>>>> a04d71ce4aed34d63d97b9c8fdd0f3de45650c6a
 
   return (
     <div className="LoginPage">
@@ -42,7 +51,7 @@ function Login() {
           onChange={ ({ target }) => setPassword(target.value) }
         />
         <button
-          type="submit"
+          type="button"
           data-testid="common_login__button-login"
           onClick={ handleClick }
           disabled={ disableButton }
@@ -50,7 +59,7 @@ function Login() {
           LOGIN
         </button>
         <button
-          type="submit"
+          type="button"
           data-testid="common_login__button-register"
           // onClick={ handleClickRegister }
         >
