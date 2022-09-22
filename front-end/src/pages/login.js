@@ -1,30 +1,23 @@
 import React, { useContext } from 'react';
-import PropTypes from 'prop-types';
 import { AuthContext } from '../context/auth';
 import { loginUser } from '../service/api';
 import rockGlass from '../images/rockGlass.svg';
 
-function Login(props) {
+function Login() {
   const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    disableButton,
-  } = useContext(AuthContext);
+    email, setEmail, password, setPassword, disableButton } = useContext(AuthContext);
 
   async function handleClick(event) {
     event.preventdefault();
     const response = await loginUser(Login);
-    if ('message' in response) {
-      window.alert(response.message);
-      return null;
-    }
-  }
 
-  function handleClickRegister() {
-    const { history } = props;
-    history.push('/register');
+    if ('message' in response) {
+      alert(response.message);
+      console.log(response.message);
+    }
+    if (response.message === 'Not Found') {
+      alert('Usuário não encontrado');
+    }
   }
 
   return (
@@ -59,7 +52,7 @@ function Login(props) {
         <button
           type="submit"
           data-testid="common_login__button-register"
-          onClick={ handleClickRegister }
+          // onClick={ handleClickRegister }
         >
           Ainda não tenho conta
         </button>
@@ -67,11 +60,5 @@ function Login(props) {
     </div>
   );
 }
-
-Login.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
 
 export default Login;
