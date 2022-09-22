@@ -1,33 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/auth';
-import { loginUser } from '../service/api';
 import rockGlass from '../images/rockGlass.svg';
+import { loginUser } from '../service/api';
 
 function Login() {
+  const [invalidUserMessage, setInvalidUserMessage] = useState(false);
   const {
     email, setEmail, password, setPassword, disableButton } = useContext(AuthContext);
 
   const handleClick = async (event) => {
     event.preventDefault();
-    const response = await loginUser(Login);
+    const response = await loginUser({ email, password });
+    console.log(response, 'testando');
 
-    if ('message' in response) {
-      alert(response.message);
-      console.log(response.message);
+    // console.log(invalidUserMessage);
+    /*     if ('message' in response) {
+      // alert(response.message);
+    } */
+    if (response.message === 'Not found') {
+      setInvalidUserMessage(true);
     }
-    if (response.message === 'Not Found') {
-      alert('Usuário não encontrado');
-    }
-<<<<<<< HEAD
-  }
-=======
   };
-
-  const handleClickRegister = () => {
-    const { history } = props;
-    history.push('/register');
-  };
->>>>>>> a04d71ce4aed34d63d97b9c8fdd0f3de45650c6a
 
   return (
     <div className="LoginPage">
@@ -66,6 +59,14 @@ function Login() {
           Ainda não tenho conta
         </button>
       </form>
+      {
+        invalidUserMessage ? (
+          <h4
+            data-testid="common_login__element-invalid-email"
+          >
+            Usuário e senha não encontrados!
+          </h4>) : ''
+      }
     </div>
   );
 }
