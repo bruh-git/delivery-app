@@ -1,24 +1,36 @@
 import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
 import { AuthContext } from '../context/auth';
+import { loginUser } from '../service/api';
 import rockGlass from '../images/rockGlass.svg';
 
-function Login() {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+function Login(props) {
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    disableButton,
+  } = useContext(AuthContext);
 
-  const { signIn, user } = useContext(AuthContext);
-
-  function handleSubmit() {
-    signIn(email, password);
-    setLocalStorage('user', { email });
+  async function handleClick(event) {
+    event.preventdefault();
+    const response = await loginUser(Login);
+    if ('message' in response) {
+      window.alert(response.message);
+      return null;
+    }
   }
 
-  console.log(user);
+  function handleClickRegister() {
+    const { history } = props;
+    history.push('/register');
+  }
 
   return (
     <div className="LoginPage">
       <img src={ rockGlass } alt="logo" />
-      <form onSubmit={ handleSubmit }>
+      <form className="loginForm">
         <h1>Login</h1>
         <input
           name="Login"
@@ -36,14 +48,30 @@ function Login() {
           data-testid="common_login__input-password"
           onChange={ ({ target }) => setPassword(target.value) }
         />
-        <button type="submit" data-testid="common_login__button-login">
+        <button
+          type="submit"
+          data-testid="common_login__button-login"
+          onClick={ handleClick }
+          disabled={ disableButton }
+        >
           LOGIN
         </button>
-        <button type="submit" data-testid="common_login__button-register">
+        <button
+          type="submit"
+          data-testid="common_login__button-register"
+          onClick={ handleClickRegister }
+        >
           Ainda não tenho conta
         </button>
       </form>
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
 export default Login;

@@ -1,28 +1,40 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect, useMemo } from 'react';
 
-export const AuthContext = createContext({});
+export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [disableButton, setDisablebutton] = useState(true);
 
-  function signIn(email, password) {
-    if (email !== '' && password !== '') {
-      setUser({
-        email,
-        password,
-      });
+  const contextValues = useMemo(() => ({
+    email,
+    setEmail,
+    password,
+    setPassword,
+    disableButton,
+  }), [email, password, disableButton]);
+
+  useEffect(() => {
+    setDisablebutton(true);
+  }, []);
+
+  useEffect(() => {
+    const numberMin = 5;
+    const verifyPassword = password === undefined ? false : password.length > numberMin;
+    const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const verifyEmail = emailRegex.test(email);
+
+    if (verifyPassword && verifyEmail) {
+      setDisablebutton(false);
+    } else {
+      setDisablebutton(true);
     }
-  }
-
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
-  const contextValue = {
-    signIn,
-    user,
-  };
+  }, [email, password]);
 
   return (
-    <AuthContext.Provider value={ contextValue }>
+    <AuthContext.Provider value={ contextValues }>
       { children }
     </AuthContext.Provider>
   );
