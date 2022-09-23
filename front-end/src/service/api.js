@@ -4,4 +4,8 @@ export const loginUser = async (
   { email, password },
 ) => instance.post('/login', { email, password }).catch((err) => err.response.data);
 
-export const register = async () => instance.post('/register');
+export const registerUser = async (
+  { name, email, password },
+) => instance.post('/register', { name, email, password }).catch(
+  (err) => err.response.data,
+);

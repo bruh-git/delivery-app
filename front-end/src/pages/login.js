@@ -12,21 +12,15 @@ function Login(props) {
   const handleClick = async (event) => {
     event.preventDefault();
     const response = await loginUser({ email, password });
-    console.log(response, 'testando');
-
-    // console.log(invalidUserMessage);
-    /*     if ('message' in response) {
-      // alert(response.message);
-    } */
 
     // TESTE USUÁRIO FUNCIONANDO -> adm@deliveryapp.com PW: --adm2@21!!--
-    if (response.message === 'Not found'
+    if (response.message === 'Conflict'
     || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
     } else {
-      console.log('entrou!');
+      console.log(response, 'entrou!');
       const { history } = props;
-      history.push('/custumer/products'); // <- errado
+      history.push('/custumer/products');
     }
   };
   const handleClickRegister = () => {
