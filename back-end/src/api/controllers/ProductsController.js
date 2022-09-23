@@ -5,10 +5,10 @@ class ProductsController {
     this.service = service;
   }
 
-  async findAll(req, res) {
+  static async findAll(req, res) {
     const { authorization } = req.headers;
-    await this.service.validation(authorization);
-    const products = await this.service.findAll();
+    await ProductsService.validation(authorization);
+    const products = await ProductsService.findAll();
     return res.status(200).json(products);
   }
 }

@@ -12,7 +12,7 @@ class LoginController {
     return res.status(200).json({ token, role });
   }
 
-  // Ainda não implementado =>
+  // Ainda não implementado =>0
   async validation(req, res) {
     const { authorization } = req.headers;
     if (!authorization) {

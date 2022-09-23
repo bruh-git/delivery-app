@@ -8,7 +8,7 @@ class LoginService {
   static async validateBody(data) {
     const schema = Joi.object({
       email: Joi.string().email().required(),
-      password: Joi.string().required(),
+      password: Joi.string().min(5).required(),
     });
   
     const { error, value } = schema.validate(data);
@@ -22,8 +22,12 @@ class LoginService {
       attributes: ['email', 'password', 'role', 'name'],
       where: { email },
     });
+
+    if (user === null) throw new CustomError('Not found', 404);
+
     const checkPassword = md5(password) === user.password;
     if (!user || !checkPassword) throw new CustomError('Not found', 404);
+    
     const token = jwtService.createToken({ email, name: user.name });
     const { role } = user;
 
