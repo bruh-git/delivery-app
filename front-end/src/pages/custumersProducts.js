@@ -1,6 +1,6 @@
 import React from 'react';
 
-function costumerProducts() {
+function CustumerProducts() {
   return (
     <div>
       <h1>Customer products (em produção) </h1>
@@ -8,4 +8,4 @@ function costumerProducts() {
   );
 }
 
-export default costumerProducts;
+export default CustumerProducts;

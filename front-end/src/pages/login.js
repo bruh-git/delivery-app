@@ -26,7 +26,7 @@ function Login(props) {
     } else {
       console.log('entrou!');
       const { history } = props;
-      history.push('/costumer/products');
+      history.push('/custumer/products'); // <- errado
     }
   };
   const handleClickRegister = () => {

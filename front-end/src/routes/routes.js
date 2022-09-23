@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import costumerProducts from '../pages/costumersProducts';
+import CustumerProducts from '../pages/custumersProducts';
 
 import Login from '../pages/login';
 import Register from '../pages/register';
@@ -13,7 +13,7 @@ function Routes() {
       </Route>
       <Route component={ Login } path="/login" exact />
       <Route exact path="/register" component={ Register } />
-      <Route exact patch="/customer/products" component={ costumerProducts } />
+      <Route exact patch="/customer/products" component={ CustumerProducts } />
     </Switch>
   );
 }
