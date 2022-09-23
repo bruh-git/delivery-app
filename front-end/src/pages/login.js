@@ -68,7 +68,7 @@ function Login(props) {
       {
         invalidUserMessage ? (
           <h4
-            data-testid="data-testid='common_login__element-invalid-email'"
+            data-testid="common_login__element-invalid-email"
           >
             Usuário e senha não encontrados!
           </h4>) : ''
