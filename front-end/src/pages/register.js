@@ -16,7 +16,7 @@ function Register(props) {
       setInvalidUserMessage(true);
     } else {
       const { history } = props;
-      history.push('/custumer/products');
+      history.push('/customer/products');
     }
   };
   return (

@@ -20,7 +20,7 @@ function Login(props) {
     } else {
       console.log(response, 'entrou!');
       const { history } = props;
-      history.push('/custumer/products');
+      history.push('/login');
     }
   };
   const handleClickRegister = () => {
