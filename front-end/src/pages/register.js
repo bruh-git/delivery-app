@@ -14,8 +14,10 @@ function Register(props) {
 
     if (response.message === 'Conflict') {
       setInvalidUserMessage(true);
+      disableButton(true);
     } else {
       const { history } = props;
+      disableButton(false);
       history.push('/customer/products');
     }
   };
