@@ -9,13 +9,16 @@ class ProductService {
       e.name = 'Authorization';
       throw e;
     }
+    console.log('oi validation')
     const { email, name } = jwtService.validateToken(token);
     console.log([email, name]);
     const user = await User.findOne({
       attributes: ['email', 'name'],
-      where: { email, name }
+      where: { email, name },
     });
-    if (!user) throw new CustomError('Token invalid', 401)
+    console.log('oi validation2')
+    if (!user) throw new CustomError('Token invalid', 401);
+    console.log('oi validation3')
   }
 
   static async findAll() {
@@ -25,14 +28,3 @@ class ProductService {
 }
 
 module.exports = ProductService;
-
-
-
-
-
-
-// if (!token) {
-//   const e = new Error('token not found');
-//   e.name = 'Authorization';
-//   throw e;
-// }

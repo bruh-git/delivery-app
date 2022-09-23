@@ -22,8 +22,12 @@ class LoginService {
       attributes: ['email', 'password', 'role', 'name'],
       where: { email },
     });
+
+    if (user === null) throw new CustomError('Not found', 404);
+
     const checkPassword = md5(password) === user.password;
-    if (!user || !checkPassword) throw new CustomError('Not found', 404);
+    if (!checkPassword) throw new CustomError('Email or password incorrect', 403);
+
     const token = jwtService.createToken({ email, name: user.name });
     const { role } = user;
 
