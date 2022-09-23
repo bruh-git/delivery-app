@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/auth';
 import rockGlass from '../images/rockGlass.svg';
 import { loginUser } from '../service/api';
 
-function Login() {
+function Login(props) {
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
   const {
     email, setEmail, password, setPassword, disableButton } = useContext(AuthContext);
@@ -17,9 +18,14 @@ function Login() {
     /*     if ('message' in response) {
       // alert(response.message);
     } */
-    if (response.message === 'Not found') {
+    if (response.message === 'Not found'
+    || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
-    }
+    } else { console.log('entrou!'); }
+  };
+  const handleClickRegister = () => {
+    const { history } = props;
+    history.push('/register');
   };
 
   return (
@@ -54,7 +60,7 @@ function Login() {
         <button
           type="button"
           data-testid="common_login__button-register"
-          // onClick={ handleClickRegister }
+          onClick={ handleClickRegister }
         >
           Ainda não tenho conta
         </button>
@@ -70,5 +76,11 @@ function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Login;

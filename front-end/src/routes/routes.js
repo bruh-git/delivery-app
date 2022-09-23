@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 
 import Login from '../pages/login';
+import Register from '../pages/register';
 
 function Routes() {
   return (
@@ -10,6 +11,7 @@ function Routes() {
         <Redirect to="/login" />
       </Route>
       <Route component={ Login } path="/login" exact />
+      <Route exact path="/register" component={ Register } />
     </Switch>
   );
 }
