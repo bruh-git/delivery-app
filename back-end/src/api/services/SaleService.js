@@ -1,7 +1,7 @@
+const Joi = require('joi');
 const { Sale, User } = require('../../database/models');
 const jwtService = require('./JwtService');
 const CustomError = require('../middlewares/CustomError');
-const Joi = require('joi');
 
 class SaleService {
   static async validateBody(data) {
@@ -36,9 +36,8 @@ class SaleService {
   }
 
   static async create(sale) {
-    console.log(sale)
-    const [insertId] = await Sale.create({sale});
-    return insertId;
+    const order = await Sale.create(sale);
+    return order.id;
   }
 }
 
