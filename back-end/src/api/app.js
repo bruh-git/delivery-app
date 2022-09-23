@@ -3,7 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const loginRouter = require('./routes/loginRouter');
 const registerRouter = require('./routes/registerRouter');
-const productsRouter = require('./routes/productsRouter');
+const productRouter = require('./routes/productRouter');
+const saleRouter = require('./routes/saleRouter');
 const errorHandler = require('./middlewares/error');
 
 const app = express();
@@ -12,7 +13,8 @@ app.use(cors());
  
 app.use('/', loginRouter);
 app.use('/', registerRouter);
-app.use('/', productsRouter);
+app.use('/', productRouter);
+app.use('/', saleRouter);
 app.use((req, res, next, err) => errorHandler(req, res, next, err));
 
 module.exports = app;

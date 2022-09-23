@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   {
     timestamps: false,
     underscored: true,
-    tableName: 'produts',
-    modelName: 'produts',
+    tableName: 'products',
+    modelName: 'products',
   });
 
   // User.associate = (models) => {
