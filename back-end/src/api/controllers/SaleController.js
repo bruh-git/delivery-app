@@ -3,18 +3,20 @@ const SaleService = require('../services/SaleService');
 class SaleController {
   static async create(req, res) {
     const { authorization } = req.headers;
-    await SaleService.validateBody(req.body);
-    await SaleService.validateToken(authorization);
-    const saleId = await SaleService.create(req.body);
+    await SaleService.validateToken(authorization)
+    await SaleService.validateBody(req.body)
+    const saleId = await SaleService.create(req.body)
     return res.status(201).json({ saleId });
   }
 
-  static async findOne(req, _res) {
+  static async findOne(req, res) {
     const { id } = req.params;
     await SaleService.validateParams(id);
-    // Cria validação 
+    const order = await SaleService.findOne(id);
+    // Possível validação 
     // userId => getUserID(token)
     // checkUserAllowance({ userId, id from params })
+    return res.status(200).json(order);
   }
 }
 
