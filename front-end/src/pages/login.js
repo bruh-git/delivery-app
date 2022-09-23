@@ -18,6 +18,8 @@ function Login(props) {
     /*     if ('message' in response) {
       // alert(response.message);
     } */
+
+    // TESTE USUÁRIO FUNCIONANDO -> adm@deliveryapp.com PW: --adm2@21!!--
     if (response.message === 'Not found'
     || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
