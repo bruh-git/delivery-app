@@ -23,7 +23,11 @@ function Login(props) {
     if (response.message === 'Not found'
     || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
-    } else { console.log('entrou!'); }
+    } else {
+      console.log('entrou!');
+      const { history } = props;
+      history.push('/costumer/products');
+    }
   };
   const handleClickRegister = () => {
     const { history } = props;
