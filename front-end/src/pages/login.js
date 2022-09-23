@@ -14,13 +14,13 @@ function Login(props) {
     const response = await loginUser({ email, password });
 
     // TESTE USUÁRIO FUNCIONANDO -> adm@deliveryapp.com PW: --adm2@21!!--
-    if (response.message === 'Conflict'
+    if (response.message === 'Not found'
     || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
     } else {
       console.log(response, 'entrou!');
       const { history } = props;
-      history.push('/login');
+      history.push('/customer/products');
     }
   };
   const handleClickRegister = () => {
@@ -68,7 +68,7 @@ function Login(props) {
       {
         invalidUserMessage ? (
           <h4
-            data-testid="common_login__element-invalid-email"
+            data-testid="data-testid='common_login__element-invalid-email'"
           >
             Usuário e senha não encontrados!
           </h4>) : ''
