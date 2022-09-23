@@ -13,7 +13,6 @@ class JwtService {
     try {
       const payload = verify(token, jwtSecret);
       return payload;
-
     } catch (err) {
       console.log(err);
       const e = new Error('Token must be a valid token');

@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'products',
   });
 
-  // User.associate = (models) => {
-  //   User.hasMany(models.BlogPost,
-  //     { foreignKey: 'userId', as: 'blogPosts' },
-  //     );
-  // };
+  Product.associate = (models) => {
+    models.Product.hasMany(models.SaleProduct,
+      { foreignKey: 'productId', as: 'product' },
+      );
+  };
 
   return Product;
 };
