@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { RegisterContext } from '../context/register';
 import { registerUser } from '../service/api';
 
 function Register(props) {
+  const [invalidUserMessage, setInvalidUserMessage] = useState(false);
   const { name, email, password,
     setEmail, setPassword, setName, disableButton } = useContext(RegisterContext);
 
@@ -12,10 +13,11 @@ function Register(props) {
     const response = await registerUser({ name, email, password });
 
     if (response.message === 'Conflict') {
-      return alert(response.message);
+      setInvalidUserMessage(true);
+    } else {
+      const { history } = props;
+      history.push('/custumer/products');
     }
-    const { history } = props;
-    history.push('/login');
   };
   return (
     <div className="RegisterPage">
@@ -39,7 +41,7 @@ function Register(props) {
         <h3>Senha</h3>
         <input
           name="password"
-          type="text"
+          type="password"
           placeholder="*********"
           data-testid="common_register__input-password"
           onChange={ ({ target }) => setPassword(target.value) }
@@ -53,6 +55,14 @@ function Register(props) {
           Cadastrar
         </button>
       </form>
+      {
+        invalidUserMessage ? (
+          <h4
+            data-testid="common_register__element-invalid_register"
+          >
+            Usuário já existe!
+          </h4>) : ''
+      }
     </div>
   );
 }
