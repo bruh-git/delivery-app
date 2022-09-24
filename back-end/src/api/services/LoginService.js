@@ -26,13 +26,8 @@ class LoginService {
     if (user === null) throw new CustomError('Not found', 404);
 
     const checkPassword = md5(password) === user.password;
-<<<<<<< HEAD
-    if (!user || !checkPassword) throw new CustomError('Not found', 404);
-    
-=======
     if (!checkPassword) throw new CustomError('Email or password incorrect', 403);
 
->>>>>>> 160e99a0f4ee369c85255d19c6a5d9187fc23ccc
     const token = jwtService.createToken({ email, name: user.name });
     const { role } = user;
 

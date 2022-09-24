@@ -1,9 +1,10 @@
 const Joi = require('joi');
+const Sequelize = require('sequelize');
 const { Sale, User, SaleProduct } = require('../../database/models');
 const jwtService = require('./JwtService');
 const CustomError = require('../middlewares/CustomError');
 const config = require('../../database/config/config');
-const Sequelize = require('sequelize');
+
 const sequelize = new Sequelize(config.development);
 
 class SaleService {
@@ -15,12 +16,11 @@ class SaleService {
         totalPrice: Joi.number().required(),
         deliveryAddress: Joi.string().required(),
         deliveryNumber: Joi.string().required(),
-        saleDate: Joi.date().required(),
       }),
       products: Joi.array().items(Joi.object({
         id: Joi.number().required(),
-        quantity:Joi.number().required(),
-      }))
+        quantity: Joi.number().required(),
+      })),
     });
   
     const { error, value } = schema.validate(data);
@@ -45,9 +45,8 @@ class SaleService {
 
   static async create({ sale, products }) {
     const result = await sequelize.transaction(async (t) => {
-      
-      const saleResult = await Sale.create({...sale, status: 'Pendente', transaction: t});
-      console.log('first')
+      const saleResult = await Sale.create({ ...sale, status: 'Pendente', transaction: t });
+      console.log(SaleProduct);
 
       await SaleProduct.bulkCreate(products.map((product) => ({
         saleId: saleResult.id,
@@ -68,10 +67,11 @@ class SaleService {
       const { error, value } = schema.validate(id);
       if (error) throw new CustomError(error.details[0].message, 400);
       return value;
-    
   }
+
   static async findOne(id) {
-    const order = await Sale.findOne({ where: { id } })
+    // const order = await Sale.findOne({ where: { id } })
+    return id;
   }
 }
 

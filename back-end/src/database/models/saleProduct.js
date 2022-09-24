@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     tablename: 'salesProducts',
-    modelName: 'salesProducts',
+    // modelName: 'salesProducts',
     timestamps: false,
   });
   
@@ -33,5 +33,5 @@ module.exports = (sequelize, DataTypes) => {
     });
   }
 
-  return SaleProduct
+  return SaleProduct;
 }

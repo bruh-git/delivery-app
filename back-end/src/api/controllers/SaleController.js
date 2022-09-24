@@ -3,9 +3,9 @@ const SaleService = require('../services/SaleService');
 class SaleController {
   static async create(req, res) {
     const { authorization } = req.headers;
-    await SaleService.validateToken(authorization)
-    await SaleService.validateBody(req.body)
-    const saleId = await SaleService.create(req.body)
+    await SaleService.validateToken(authorization);
+    await SaleService.validateBody(req.body);
+    const saleId = await SaleService.create(req.body);
     return res.status(201).json({ saleId });
   }
 
