@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { RegisterContext } from '../context/register';
+import { AuthContext } from '../context/auth';
 
 function Header() {
-  const { name } = useContext(RegisterContext);
+  const { email } = useContext(AuthContext);
 
   return (
     <div>
@@ -15,7 +15,7 @@ function Header() {
           MEUS PEDIDOS
         </li>
         <li>
-          {name}
+          {email}
         </li>
         <li>
           <Link to="/">SAIR</Link>
