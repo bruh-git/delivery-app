@@ -1,10 +1,9 @@
 import React from 'react';
+import Header from '../components/Header';
 
 function CustumerProducts() {
   return (
-    <div>
-      <h1>Customer products (em produção) </h1>
-    </div>
+    <Header />
   );
 }
 
