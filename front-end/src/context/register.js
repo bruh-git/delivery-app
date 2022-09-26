@@ -17,6 +17,7 @@ export default function RegisterProvider({ children }) {
     setName,
     name,
     disableButton,
+    setDisablebutton,
   }), [email, password, disableButton, name]);
 
   useEffect(() => {

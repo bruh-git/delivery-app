@@ -6,19 +6,21 @@ import { registerUser } from '../service/api';
 function Register(props) {
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
   const { name, email, password,
-    setEmail, setPassword, setName, disableButton } = useContext(RegisterContext);
+    setEmail, setPassword, setName,
+    disableButton, setDisablebutton } = useContext(RegisterContext);
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    const response = await registerUser({ name, email, password });
+    const response = await registerUser({ id, name, email, password });
 
     if (response.message === 'Conflict') {
       setInvalidUserMessage(true);
-      disableButton(true);
+      setDisablebutton(true);
     } else {
       const { history } = props;
-      disableButton(false);
+      setDisablebutton(false);
       history.push('/customer/products');
+      console.log(response, 'retorno registro');
     }
   };
   return (
