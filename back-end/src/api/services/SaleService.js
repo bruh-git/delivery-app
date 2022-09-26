@@ -47,7 +47,6 @@ class SaleService {
   static async create({ sale, products }) {
     const result = await sequelize.transaction(async (t) => {
       const saleResult = await Sale.create({ ...sale, status: 'Pendente', transaction: t });
-      console.log(SaleProduct);
       await SaleProduct.bulkCreate(products.map((product) => ({
         saleId: saleResult.id,
         productId: product.id,
