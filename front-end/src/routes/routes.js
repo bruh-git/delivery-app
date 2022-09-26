@@ -13,7 +13,7 @@ function Routes() {
       </Route>
       <Route component={ Login } path="/login" exact />
       <Route exact path="/register" component={ Register } />
-      <Route exact patch="/customer/products" component={ CustumerProducts } />
+      <Route exact path="/customer/products" component={ CustumerProducts } />
     </Switch>
   );
 }

@@ -11,7 +11,7 @@ function Register(props) {
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    const response = await registerUser({ id, name, email, password });
+    const response = await registerUser({ name, email, password });
 
     if (response.message === 'Conflict') {
       setInvalidUserMessage(true);

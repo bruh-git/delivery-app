@@ -30,7 +30,7 @@ export default function RegisterProvider({ children }) {
     const verifyPassword = password === undefined ? false : password.length > numberMin;
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const verifyEmail = emailRegex.test(email);
-    const verifyName = name.length > minName;
+    const verifyName = name.length >= minName;
 
     if (verifyPassword && verifyEmail && verifyName) {
       setDisablebutton(false);
