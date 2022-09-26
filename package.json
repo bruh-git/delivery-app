@@ -32,7 +32,7 @@
   "homepage": "https://github.com/betrybe/sd-0x-project-delivery-app#readme",
   "devDependencies": {
     "@faker-js/faker": "6.0.0",
-    "axios": "0.26.1",
+    "axios": "^0.26.1",
     "dotenv": "16.0.0",
     "jest": "27.5.1",
     "jest-puppeteer": "6.1.0",
@@ -41,8 +41,8 @@
     "mysql2": "2.3.3",
     "pm2": "5.2.0",
     "puppeteer": "13.5.1",
-    "sequelize": "6.17.0",
-    "sequelize-cli": "6.4.1"
+    "sequelize": "^6.17.0",
+    "sequelize-cli": "^6.4.1"
   },
   "jest": {
     "globals": {
@@ -53,5 +53,12 @@
       "__TESTDESC__": true,
       "__TESTFILE__": true
     }
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express-async-errors": "^3.1.1",
+    "joi": "^17.6.0",
+    "react-router": "^6.4.0",
+    "react-router-dom": "^6.4.0"
   }
 }
