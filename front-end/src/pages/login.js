@@ -12,16 +12,16 @@ function Login(props) {
   const handleClick = async (event) => {
     event.preventDefault();
     const response = await loginUser({ email, password });
-    console.log(response, 'testando');
 
-    // console.log(invalidUserMessage);
-    /*     if ('message' in response) {
-      // alert(response.message);
-    } */
+    // TESTE USUÁRIO FUNCIONANDO -> adm@deliveryapp.com PW: --adm2@21!!--
     if (response.message === 'Not found'
     || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
-    } else { console.log('entrou!'); }
+    } else {
+      console.log(response, 'entrou!');
+      const { history } = props;
+      history.push('/customer/products');
+    }
   };
   const handleClickRegister = () => {
     const { history } = props;

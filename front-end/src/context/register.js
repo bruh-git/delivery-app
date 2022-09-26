@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useEffect, useMemo, useState } from 'react';
 
-export const AuthContext = createContext();
+export const RegisterContext = createContext();
 
-export default function AuthProvider({ children }) {
+export default function RegisterProvider({ children }) {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [disableButton, setDisablebutton] = useState(true);
@@ -13,8 +14,11 @@ export default function AuthProvider({ children }) {
     setEmail,
     password,
     setPassword,
+    setName,
+    name,
     disableButton,
-  }), [email, password, disableButton]);
+    setDisablebutton,
+  }), [email, password, disableButton, name]);
 
   useEffect(() => {
     setDisablebutton(true);
@@ -22,24 +26,26 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const numberMin = 5;
+    const minName = 12;
     const verifyPassword = password === undefined ? false : password.length > numberMin;
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     const verifyEmail = emailRegex.test(email);
+    const verifyName = name.length >= minName;
 
-    if (verifyPassword && verifyEmail) {
+    if (verifyPassword && verifyEmail && verifyName) {
       setDisablebutton(false);
     } else {
       setDisablebutton(true);
     }
-  }, [email, password]);
+  }, [email, password, name]);
 
   return (
-    <AuthContext.Provider value={ contextValues }>
+    <RegisterContext.Provider value={ contextValues }>
       { children }
-    </AuthContext.Provider>
+    </RegisterContext.Provider>
   );
 }
 
-AuthProvider.propTypes = {
+RegisterProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
