@@ -15,6 +15,17 @@ class SaleController {
     const order = await SaleService.findOne(id);
     return res.status(200).json(order);
   }
+
+  static async update(req, res) {
+    const { authorization } = req.headers;
+    const { id, status } = req.body;
+    await SaleService.validateParams(id);
+    await SaleService.validateBodyStatus({ id, status });
+    const { role, id: userId } = await SaleService.validateToken(authorization);
+    await SaleService.roleValidation(role, status);
+    await SaleService.update(id, status, role, userId);
+    return res.status(202).json('Status updated!');
+  }
 }
 
 module.exports = SaleController;

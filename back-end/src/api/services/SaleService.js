@@ -37,11 +37,23 @@ class SaleService {
     }
     const { email, name } = jwtService.validateToken(token);
     const user = await User.findOne({
-      attributes: ['email', 'name', 'role'],
+      attributes: ['email', 'name', 'role', 'id'],
       where: { email, name },
     });
     if (!user) throw new CustomError('Token invalid', 401);
-    return user.role;
+    return user;
+  }
+
+  static async validateBodyStatus(data) {
+    const schema = Joi.object({
+      id: Joi.number(),
+      status: Joi.string().required(),
+    });
+  
+    const { error, value } = schema.validate(data);
+    if (error) throw new CustomError(error.details[0].message, 400);
+    
+    return value;
   }
 
   static async create({ sale, products }) {
@@ -79,6 +91,22 @@ class SaleService {
     });
 
     return order;
+  }
+
+  static async roleValidation(role, status) {
+    if ((role === 'customer' && status !== 'Entregue')
+      || (role === 'seller' && status === 'Entregue')) {
+      throw new CustomError('Unauthorized user', 401);
+    }
+}
+
+  static async update(id, status, role, userId) {
+    const roles = { customer: 'userId', seller: 'sellerId' };
+    const sale = await Sale.update({ status }, { 
+      where: { id, [roles[role]]: userId },
+      fields: ['status'],
+    });
+    if (sale[0] === 0) throw new CustomError('Not updated', 401);
   }
 }
 
