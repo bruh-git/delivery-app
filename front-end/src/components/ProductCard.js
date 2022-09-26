@@ -4,9 +4,9 @@ import React from 'react';
 export default function ProductCard(props) {
   // const { id, name, price, urlImage } = props;
   const {
-    products: { id, name, urlImage, price },
+    data: { id, name, urlImage, price },
   } = props;
-  console.log(urlImage);
+  console.log(products, 'CARD');
 
   return (
     <div className="product-card">
