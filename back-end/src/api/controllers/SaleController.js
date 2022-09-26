@@ -13,9 +13,6 @@ class SaleController {
     const { id } = req.params;
     await SaleService.validateParams(id);
     const order = await SaleService.findOne(id);
-    // Possível validação 
-    // userId => getUserID(token)
-    // checkUserAllowance({ userId, id from params })
     return res.status(200).json(order);
   }
 }

@@ -47,7 +47,6 @@ class SaleService {
     const result = await sequelize.transaction(async (t) => {
       const saleResult = await Sale.create({ ...sale, status: 'Pendente', transaction: t });
       console.log(SaleProduct);
-
       await SaleProduct.bulkCreate(products.map((product) => ({
         saleId: saleResult.id,
         productId: product.id,
@@ -57,7 +56,7 @@ class SaleService {
       });
       return saleResult.id;
     });
-
+  
     return result;
   }
 
@@ -70,8 +69,8 @@ class SaleService {
   }
 
   static async findOne(id) {
-    // const order = await Sale.findOne({ where: { id } })
-    return id;
+    const order = await Sale.findOne({ where: { id } })
+    return order;
   }
 }
 
