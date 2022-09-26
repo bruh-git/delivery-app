@@ -5,15 +5,20 @@ import { ProductContext } from '../context/products';
 
 function CustumerProducts() {
   const { products } = React.useContext(ProductContext);
+  console.log(products, 'PAGINA');
   return (
     <>
       <Header />
       {' '}
-      {products.map((element) => (
-        <ProductCard
-          key={ element.id }
-          products={ element }
-        />)) }
+      {
+        products && (
+          products.map((element) => (
+            <ProductCard
+              key={ element.id }
+              products={ element }
+            />))
+        )
+      }
 
     </>
   );
