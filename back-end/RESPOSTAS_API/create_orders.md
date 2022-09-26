@@ -37,5 +37,6 @@
 ## Resposta da API
 
     {
-      "saleId": 9
+      "saleId": 14,
+      "productsIds": [ 1, 3, 2 ]
     }

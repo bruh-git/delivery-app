@@ -37,10 +37,11 @@ class SaleService {
     }
     const { email, name } = jwtService.validateToken(token);
     const user = await User.findOne({
-      attributes: ['email', 'name'],
+      attributes: ['email', 'name', 'role'],
       where: { email, name },
     });
     if (!user) throw new CustomError('Token invalid', 401);
+    return user.role;
   }
 
   static async create({ sale, products }) {
@@ -56,8 +57,12 @@ class SaleService {
       });
       return saleResult.id;
     });
+    const productsIds = products.map((product) => {
+      return product.id
+    });
+    console.log(productsIds)
   
-    return result;
+    return { saleId: result, productsIds };
   }
 
   static async validateParams(id) {

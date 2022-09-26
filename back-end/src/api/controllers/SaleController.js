@@ -5,8 +5,8 @@ class SaleController {
     const { authorization } = req.headers;
     await SaleService.validateToken(authorization);
     await SaleService.validateBody(req.body);
-    const saleId = await SaleService.create(req.body);
-    return res.status(201).json({ saleId });
+    const sale = await SaleService.create(req.body);
+    return res.status(201).json(sale);
   }
 
   static async findOne(req, res) {
