@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { RegisterContext } from '../context/register';
 import { registerUser } from '../service/api';
+import { setLocalStorage } from '../utils/localStorage';
 
 function Register(props) {
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
@@ -17,8 +18,9 @@ function Register(props) {
       setInvalidUserMessage(true);
       setDisablebutton(true);
     } else {
-      const { history } = props;
+      setLocalStorage('token', response.data.user.token);
       setDisablebutton(false);
+      const { history } = props;
       history.push('/customer/products');
       console.log(response, 'retorno registro');
     }

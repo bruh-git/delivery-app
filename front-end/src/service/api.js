@@ -9,3 +9,12 @@ export const registerUser = async (
 ) => instance.post('/register', { name, email, password }).catch(
   (err) => err.response.data,
 );
+
+export const getProducts = async ({ token }) => instance.get(
+  '/products',
+  { headers: {
+    authorization: token,
+  } },
+).catch(
+  (err) => err.response.data,
+);

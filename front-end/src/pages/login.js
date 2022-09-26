@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/auth';
 import rockGlass from '../images/rockGlass.svg';
 import { loginUser } from '../service/api';
+import { setLocalStorage } from '../utils/localStorage';
 
 function Login(props) {
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
@@ -19,6 +20,7 @@ function Login(props) {
       setInvalidUserMessage(true);
     } else {
       console.log(response, 'entrou!');
+      setLocalStorage('token', response.data.token);
       const { history } = props;
       history.push('/customer/products');
     }

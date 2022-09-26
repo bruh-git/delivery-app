@@ -1,23 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/auth';
 
 function Header() {
-  const { email } = useContext(AuthContext);
+  // const { email } = useContext(AuthContext);
 
   return (
     <div>
       <div>
-        <li>
+        <li data-testid="customer_products__element-navbar-link-products">
           PRODUTOS
         </li>
-        <li>
+        <li data-testid="customer_products__element-navbar-link-orders">
           MEUS PEDIDOS
         </li>
-        <li>
-          {email}
+        <li data-testid="customer_products__element-navbar-user-full-name">
+          qualquer nome
         </li>
-        <li>
+        <li data-testid="customer_products__element-navbar-link-logout">
           <Link to="/">SAIR</Link>
         </li>
       </div>
