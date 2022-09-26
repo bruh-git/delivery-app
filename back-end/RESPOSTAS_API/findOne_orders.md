@@ -17,5 +17,25 @@
       "deliveryAddress": "Rua da Fulana",
       "deliveryNumber": "404",
       "saleDate": "1995-01-13T03:00:00.000Z",
-      "status": "Pendente"
+      "status": "Pendente",
+      "products": [
+        {
+          "id": 1,
+          "name": "Skol Lata 250ml",
+          "price": "2.20",
+          "urlImage": "http://localhost:3001/images/skol_lata_350ml.jpg",
+          "SaleProduct": {
+            "quantity": 3
+          }
+        },
+        {
+          "id": 4,
+          "name": "Brahma 600ml",
+          "price": "7.50",
+          "urlImage": "http://localhost:3001/images/brahma_600ml.jpg",
+          "SaleProduct": {
+            "quantity": 2
+          }
+        }
+      ]
     }

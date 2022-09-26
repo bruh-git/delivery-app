@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const Sequelize = require('sequelize');
-const { Sale, User, SaleProduct } = require('../../database/models');
+const { Sale, User, SaleProduct, Product } = require('../../database/models');
 const jwtService = require('./JwtService');
 const CustomError = require('../middlewares/CustomError');
 const config = require('../../database/config/config');
@@ -47,7 +47,6 @@ class SaleService {
   static async create({ sale, products }) {
     const result = await sequelize.transaction(async (t) => {
       const saleResult = await Sale.create({ ...sale, status: 'Pendente', transaction: t });
-      console.log(SaleProduct);
       await SaleProduct.bulkCreate(products.map((product) => ({
         saleId: saleResult.id,
         productId: product.id,
@@ -57,10 +56,7 @@ class SaleService {
       });
       return saleResult.id;
     });
-    const productsIds = products.map((product) => {
-      return product.id
-    });
-    console.log(productsIds)
+    const productsIds = products.map((product) => product.id);
   
     return { saleId: result, productsIds };
   }
@@ -74,7 +70,14 @@ class SaleService {
   }
 
   static async findOne(id) {
-    const order = await Sale.findOne({ where: { id } })
+    const order = await Sale.findByPk(id, {
+      include: [{
+        model: Product,
+        as: 'products',
+        through: { attributes: ['quantity'] },
+      }],
+    });
+
     return order;
   }
 }
