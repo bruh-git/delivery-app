@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/auth';
 /* import { getLocalStorage } from '../utils/localStorage'; */
 
 function Header() {
-  /* const { email } = useContext(AuthContext); */
+  const { name } = useContext(AuthContext);
   /* const user = getLocalStorage('user'); */
 
   return (
@@ -16,10 +17,10 @@ function Header() {
           MEUS PEDIDOS
         </li>
         <li data-testid="customer_products__element-navbar-user-full-name">
-          qualquer nome
+          { name }
         </li>
         <li data-testid="customer_products__element-navbar-link-logout">
-          <Link to="/">SAIR</Link>
+          <Link to="/login">SAIR</Link>
         </li>
       </div>
     </div>
