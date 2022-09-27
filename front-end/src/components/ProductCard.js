@@ -8,10 +8,12 @@ export default function ProductCard(props) {
 
   return (
     <div data-testid="customer_products__element-navbar-link-products">
-      <h2 data-testid={ `customer_products__element-card-price-${id}` }>{price}</h2>
+      <h2 data-testid={ `customer_products__element-card-price-${id}` }>
+        {price.toString().replace('.', ',')}
+      </h2>
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
-        source={ urlImage }
+        src={ urlImage }
         alt={ name }
       />
       <h2
@@ -28,7 +30,7 @@ export default function ProductCard(props) {
       </button>
       <input
         type="number"
-        placeholder="0"
+        value="0"
         data-testid={ `customer_products__input-card-quantity-${id}` }
       />
       <button
