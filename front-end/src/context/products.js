@@ -6,7 +6,7 @@ import { getLocalStorage } from '../utils/localStorage';
 export const ProductContext = createContext();
 
 export default function ProductProvider({ children }) {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
   const contextValues = useMemo(() => ({
     products,
@@ -17,7 +17,7 @@ export default function ProductProvider({ children }) {
     const token = getLocalStorage('token');
     const fetchData = async () => {
       const dataProducts = await getProducts({ token });
-      setProducts(dataProducts);
+      setProducts(dataProducts.data);
     };
     fetchData();
   }, []);
