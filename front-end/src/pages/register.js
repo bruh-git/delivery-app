@@ -6,19 +6,24 @@ import { setLocalStorage } from '../utils/localStorage';
 
 function Register(props) {
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
-  const { name, email, password,
+  const { userName, userEmail, password,
     setEmail, setPassword, setName,
     disableButton, setDisablebutton } = useContext(RegisterContext);
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    const response = await registerUser({ name, email, password });
+    const response = await registerUser({ userName, userEmail, password });
 
     if (response.message === 'Conflict') {
       setInvalidUserMessage(true);
       setDisablebutton(true);
     } else {
-      setLocalStorage('token', response.data.user.token);
+      console.log(response, 'register');
+      const { name, role, email, token } = response.data.user;
+      setLocalStorage('name', name);
+      setLocalStorage('email', email);
+      setLocalStorage('role', role);
+      setLocalStorage('token', token);
       setDisablebutton(false);
       const { history } = props;
       history.push('/customer/products');

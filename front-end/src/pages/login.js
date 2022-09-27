@@ -8,19 +8,23 @@ import { setLocalStorage } from '../utils/localStorage';
 function Login(props) {
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
   const {
-    email, setEmail, password, setPassword, disableButton } = useContext(AuthContext);
+    userEmail, setEmail, password, setPassword, disableButton } = useContext(AuthContext);
 
   const handleClick = async (event) => {
     event.preventDefault();
-    const response = await loginUser({ email, password });
+    const response = await loginUser({ userEmail, password });
 
     // TESTE USUÁRIO FUNCIONANDO -> adm@deliveryapp.com PW: --adm2@21!!--
     if (response.message === 'Not found'
     || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
     } else {
-      /* const data = { name, role, email, token } = response */
-      setLocalStorage('token', response.data.token);
+      // console.log(response.data, 'login');
+      const { name, role, email, token } = response.data;
+      setLocalStorage('name', name);
+      setLocalStorage('email', email);
+      setLocalStorage('role', role);
+      setLocalStorage('token', token);
       const { history } = props;
       history.push('/customer/products');
     }
@@ -38,7 +42,7 @@ function Login(props) {
         <input
           name="Login"
           type="email"
-          value={ email }
+          value={ userEmail }
           placeholder="email@trybeer.com.br"
           data-testid="common_login__input-email"
           onChange={ ({ target }) => setEmail(target.value) }

@@ -26,9 +26,14 @@ export default function ProductCard(props) {
       >
         -
       </button>
-      <p data-testid={ `customer_products__input-card-quantity-${id}` }>0</p>
+      <input
+        type="number"
+        placeholder="0"
+        data-testid={ `customer_products__input-card-quantity-${id}` }
+      />
       <button
         type="button"
+        data-testid={ `customer_products__button-card-add-item-${id}` }
       >
         +
       </button>
