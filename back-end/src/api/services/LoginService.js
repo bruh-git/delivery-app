@@ -31,7 +31,7 @@ class LoginService {
     const token = jwtService.createToken({ email, name: user.name });
     const { role } = user;
 
-    return { token, role };
+    return { token, role, name: user.name, email };
   }
 }
 

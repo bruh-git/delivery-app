@@ -25,7 +25,7 @@ class RegisterService {
     const hashPassword = md5(password).toString();
     await User.create({ email, name, password: hashPassword, role: 'customer' });
     const token = JwtService.createToken({ email, name });
-    return { token, role: 'customer' };
+    return { token, role: 'customer', name, email };
   }
 }
 

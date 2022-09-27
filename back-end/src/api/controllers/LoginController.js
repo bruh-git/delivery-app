@@ -8,8 +8,8 @@ class LoginController {
   static async login(req, res) {
     const { email, password } = req.body;
     await LoginService.validateBody({ email, password });
-    const { token, role } = await LoginService.login(email, password);
-    return res.status(200).json({ token, role });
+    const { token, role, name, email: userEmail } = await LoginService.login(email, password);
+    return res.status(200).json({ token, role, name, email: userEmail });
   }
 
   // Ainda não implementado =>0
