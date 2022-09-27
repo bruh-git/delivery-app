@@ -7,19 +7,19 @@ export default function ProductCard(props) {
   } = props;
 
   return (
-    <div className="product-card">
+    <div data-testid="customer_products__element-navbar-link-products">
       <h2 data-testid={ `customer_products__element-card-price-${id}` }>{price}</h2>
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         source={ urlImage }
         alt={ name }
       />
-      <h3
+      <h2
         data-testid={ `customer_products__element-card-title-${id}` }
       >
         {name}
 
-      </h3>
+      </h2>
       <button
         type="button"
         data-testid={ `customer_products__button-card-rm-item-${id}` }
