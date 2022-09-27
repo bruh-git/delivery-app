@@ -27,7 +27,7 @@ class AdminController {
       await AdminService.validateAdmin(authorization);
       await AdminService.validateParams(id);
       await AdminService.delete(id);
-      return res.status(204);
+      return res.status(204).send();
     }
 }
 
