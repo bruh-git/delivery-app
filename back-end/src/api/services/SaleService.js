@@ -44,6 +44,17 @@ class SaleService {
     return user.role;
   }
 
+  static async serialize(order) {
+    const quantities = order.products.map((el) => el.get('SaleProduct').get('quantity'));
+    quantities.forEach((_el, idx) => {
+      const { products } = order.dataValues;
+      delete products[idx].dataValues.SaleProduct;
+      products[idx].dataValues.quantity = quantities[idx];
+    });
+
+    return order;
+  }
+
   static async create({ sale, products }) {
     const result = await sequelize.transaction(async (t) => {
       const saleResult = await Sale.create({ ...sale, status: 'Pendente', transaction: t });

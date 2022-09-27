@@ -13,7 +13,8 @@ class SaleController {
     const { id } = req.params;
     await SaleService.validateParams(id);
     const order = await SaleService.findOne(id);
-    return res.status(200).json(order);
+    const orderSerialized = await SaleService.serialize(order);
+    return res.status(200).json(orderSerialized);
   }
 }
 
