@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+/* import { getLocalStorage } from '../utils/localStorage'; */
 
 function Header() {
-  // const { email } = useContext(AuthContext);
+  /* const { email } = useContext(AuthContext); */
+  /* const user = getLocalStorage('user'); */
 
   return (
     <div>

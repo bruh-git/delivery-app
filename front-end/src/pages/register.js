@@ -22,7 +22,6 @@ function Register(props) {
       setDisablebutton(false);
       const { history } = props;
       history.push('/customer/products');
-      console.log(response, 'retorno registro');
     }
   };
   return (

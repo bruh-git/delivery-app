@@ -11,11 +11,12 @@ function CustumerProducts() {
     <>
       <Header />
       {' '}
-
       {
-        Object.assign(products).map((product, index) => (
-          <ProductCard key={ index } data={ product } />
-        ))
+        products && (
+          Object.assign(products).map((product, index) => (
+            <ProductCard key={ index } data={ product } />
+          ))
+        )
       }
     </>
   );

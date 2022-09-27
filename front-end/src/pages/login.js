@@ -19,7 +19,6 @@ function Login(props) {
     || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
     } else {
-      console.log(response, 'entrou!');
       setLocalStorage('token', response.data.token);
       const { history } = props;
       history.push('/customer/products');

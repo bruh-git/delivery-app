@@ -14,7 +14,12 @@ export default function ProductCard(props) {
         source={ urlImage }
         alt={ name }
       />
-      <h3>{name}</h3>
+      <h3
+        data-testid={ `customer_products__element-card-title-${id}` }
+      >
+        {name}
+
+      </h3>
       <button
         type="button"
         data-testid={ `customer_products__button-card-rm-item-${id}` }
