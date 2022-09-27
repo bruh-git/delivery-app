@@ -20,11 +20,17 @@ function Register(props) {
     } else {
       console.log(response, 'register');
       const { name, role, email, token } = response.data.user;
-      setLocalStorage('name', name);
+      setLocalStorage('user', {
+        name,
+        email,
+        role,
+        token,
+      });
+      /*       setLocalStorage('name', name);
       setLocalStorage('email', email);
       setLocalStorage('role', role);
       setLocalStorage('token', token);
-      setDisablebutton(false);
+      setDisablebutton(false); */
       const { history } = props;
       history.push('/customer/products');
     }

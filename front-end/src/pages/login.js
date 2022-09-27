@@ -21,10 +21,16 @@ function Login(props) {
     } else {
       // console.log(response.data, 'login');
       const { name, role, email, token } = response.data;
-      setLocalStorage('name', name);
+      setLocalStorage('user', {
+        name,
+        email,
+        role,
+        token,
+      });
+      /*       setLocalStorage('name', name);
       setLocalStorage('email', email);
       setLocalStorage('role', role);
-      setLocalStorage('token', token);
+      setLocalStorage('token', token); */
       const { history } = props;
       history.push('/customer/products');
     }

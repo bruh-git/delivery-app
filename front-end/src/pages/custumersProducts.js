@@ -5,12 +5,12 @@ import { ProductContext } from '../context/products';
 import { getProducts } from '../service/api';
 import { getLocalStorage } from '../utils/localStorage';
 
-function CustumerProducts(props) {
+function CustumerProducts() {
   const { setProducts, products } = useContext(ProductContext);
   console.log(products, 'PAGINAaa');
 
   useEffect(() => {
-    const token = getLocalStorage('token');
+    const { token } = getLocalStorage('user');
     const fetchData = async () => {
       const dataProducts = await getProducts({ token });
       setProducts(dataProducts.data);
@@ -20,7 +20,7 @@ function CustumerProducts(props) {
 
   return (
     <>
-      <Header props={ props } />
+      <Header />
       {' '}
       {
         !products ? <p>Carregando...</p> : (

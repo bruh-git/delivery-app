@@ -4,13 +4,13 @@ import { getLocalStorage } from '../utils/localStorage';
 
 export default function Header() {
   const history = useHistory();
-  const user = getLocalStorage('name');
-  console.log(user);
+  const user = getLocalStorage('user');
+  console.log(user, 'header');
 
-  const handleLogOut = async (event) => {
-    event.preventDefault();
+  const handleLogOut = () => {
+    // event.preventDefault();
+    localStorage.removeItem('user');
     history.push('/login');
-    localStorage.clear();
   };
 
   return (
@@ -23,10 +23,11 @@ export default function Header() {
           MEUS PEDIDOS
         </li>
         <li data-testid="customer_products__element-navbar-user-full-name">
-          { user }
+          { user.name }
         </li>
-        <li data-testid="customer_products__element-navbar-link-logout">
+        <li>
           <button
+            data-testid="customer_products__element-navbar-link-logout"
             type="button"
             onClick={ handleLogOut }
           >
