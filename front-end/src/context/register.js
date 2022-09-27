@@ -4,21 +4,21 @@ import React, { createContext, useEffect, useMemo, useState } from 'react';
 export const RegisterContext = createContext();
 
 export default function RegisterProvider({ children }) {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState();
+  const [userName, setName] = useState('');
+  const [userEmail, setEmail] = useState();
   const [password, setPassword] = useState();
   const [disableButton, setDisablebutton] = useState(true);
 
   const contextValues = useMemo(() => ({
-    email,
+    userEmail,
     setEmail,
     password,
     setPassword,
     setName,
-    name,
+    userName,
     disableButton,
     setDisablebutton,
-  }), [email, password, disableButton, name]);
+  }), [userEmail, password, disableButton, userName]);
 
   useEffect(() => {
     setDisablebutton(true);
@@ -29,15 +29,15 @@ export default function RegisterProvider({ children }) {
     const minName = 12;
     const verifyPassword = password === undefined ? false : password.length > numberMin;
     const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-    const verifyEmail = emailRegex.test(email);
-    const verifyName = name.length >= minName;
+    const verifyEmail = emailRegex.test(userEmail);
+    const verifyName = userName.length >= minName;
 
     if (verifyPassword && verifyEmail && verifyName) {
       setDisablebutton(false);
     } else {
       setDisablebutton(true);
     }
-  }, [email, password, name]);
+  }, [userEmail, password, userName]);
 
   return (
     <RegisterContext.Provider value={ contextValues }>

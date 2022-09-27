@@ -1,11 +1,17 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { AuthContext } from '../context/auth';
-/* import { getLocalStorage } from '../utils/localStorage'; */
+import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { getLocalStorage } from '../utils/localStorage';
 
-function Header() {
-  const { name } = useContext(AuthContext);
-  /* const user = getLocalStorage('user'); */
+export default function Header() {
+  const history = useHistory();
+  const user = getLocalStorage('name');
+  console.log(user);
+
+  const handleLogOut = async (event) => {
+    event.preventDefault();
+    history.push('/login');
+    localStorage.clear();
+  };
 
   return (
     <div>
@@ -17,14 +23,18 @@ function Header() {
           MEUS PEDIDOS
         </li>
         <li data-testid="customer_products__element-navbar-user-full-name">
-          { name }
+          { user }
         </li>
         <li data-testid="customer_products__element-navbar-link-logout">
-          <Link to="/login">SAIR</Link>
+          <button
+            type="button"
+            onClick={ handleLogOut }
+          >
+            Sair
+
+          </button>
         </li>
       </div>
     </div>
   );
 }
-
-export default Header;
