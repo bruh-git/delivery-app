@@ -5,16 +5,22 @@ export const AuthContext = createContext();
 
 export default function AuthProvider({ children }) {
   const [email, setEmail] = useState();
+  const [name, setName] = useState();
+  const [role, setRole] = useState();
   const [password, setPassword] = useState();
   const [disableButton, setDisablebutton] = useState(true);
 
   const contextValues = useMemo(() => ({
+    name,
+    setName,
+    role,
+    setRole,
     email,
     setEmail,
     password,
     setPassword,
     disableButton,
-  }), [email, password, disableButton]);
+  }), [email, name, role, password, disableButton]);
 
   useEffect(() => {
     setDisablebutton(true);

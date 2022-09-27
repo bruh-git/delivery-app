@@ -19,6 +19,7 @@ function Login(props) {
     || response.message === 'Email or password incorrect') {
       setInvalidUserMessage(true);
     } else {
+      /* const data = { name, role, email, token } = response */
       setLocalStorage('token', response.data.token);
       const { history } = props;
       history.push('/customer/products');
