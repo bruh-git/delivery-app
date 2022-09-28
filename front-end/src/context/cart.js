@@ -1,24 +1,24 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useMemo, useState } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
+import { setLocalStorage } from '../utils/localStorage';
 // import { getProducts } from '../service/api';
-// import { getLocalStorage } from '../utils/localStorage';
 
 export const CartContext = createContext();
 
 export default function CartProvider({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
-  // const [productsQtd, setProductsQtd] = useState([]);
+  const [fullPrice, setFullPrice] = useState(0);
 
-  /*   userEffect(() => {
-    const products = getLocalStorage('productsQtd, cartProducts');
-  }, []); */
+  useEffect(() => {
+    setLocalStorage('cartList', cartProducts);
+  }, [cartProducts]);
 
   const contextValues = useMemo(() => ({
     cartProducts,
     setCartProducts,
-    // productsQtd,
-    // setProductsQtd,
-  }), [cartProducts]);
+    setFullPrice,
+    fullPrice,
+  }), [cartProducts, fullPrice]);
 
   return (
     <CartContext.Provider value={ contextValues }>

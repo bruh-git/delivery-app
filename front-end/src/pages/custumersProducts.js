@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import ProductCard from '../components/ProductCard';
+import ButtonTotal from '../components/totalButton';
 import { ProductContext } from '../context/products';
 import { getProducts } from '../service/api';
 import { getLocalStorage } from '../utils/localStorage';
@@ -29,6 +30,7 @@ function CustumerProducts() {
           ))
         )
       }
+      <ButtonTotal />
     </>
   );
 }

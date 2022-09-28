@@ -40,7 +40,6 @@ export default function ProductCard(props) {
             return el;
           }));
       } setCartProducts(cartProducts.concat({ id, name, urlImage, price, quantity }));
-      console.log(cartProducts, 'carProducts');
     };
 
     handleCartContext();
@@ -48,7 +47,9 @@ export default function ProductCard(props) {
   }, [quantity]);
 
   return (
-    <div data-testid="customer_products__element-navbar-link-products">
+    <div
+      data-testid="customer_products__element-navbar-link-products"
+    >
       <h2 data-testid={ `customer_products__element-card-price-${id}` }>
         {price.toString().replace('.', ',')}
       </h2>
@@ -56,6 +57,7 @@ export default function ProductCard(props) {
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         src={ urlImage }
         alt={ name }
+        width="100px"
       />
       <h2
         data-testid={ `customer_products__element-card-title-${id}` }
@@ -66,7 +68,6 @@ export default function ProductCard(props) {
       <button
         name="minusButton"
         type="button"
-        // value={ [id, name, urlImage, price] }
         data-testid={ `customer_products__button-card-rm-item-${id}` }
         onClick={ ({ target }) => handleClick(target) }
       >
@@ -75,11 +76,11 @@ export default function ProductCard(props) {
       <input
         value={ quantity }
         data-testid={ `customer_products__input-card-quantity-${id}` }
+        onChange={ ({ target }) => setQuantity(target.value) }
       />
       <button
         name="plusButton"
         type="button"
-        // value={ [id, name, urlImage, price] }
         data-testid={ `customer_products__button-card-add-item-${id}` }
         onClick={ ({ target }) => handleClick(target) }
       >
