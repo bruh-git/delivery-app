@@ -7,7 +7,7 @@ export const CartContext = createContext();
 
 export default function CartProvider({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
-  const [productsQtd, setProductsQtd] = useState([]);
+  // const [productsQtd, setProductsQtd] = useState([]);
 
   /*   userEffect(() => {
     const products = getLocalStorage('productsQtd, cartProducts');
@@ -16,9 +16,9 @@ export default function CartProvider({ children }) {
   const contextValues = useMemo(() => ({
     cartProducts,
     setCartProducts,
-    productsQtd,
-    setProductsQtd,
-  }), [cartProducts, productsQtd]);
+    // productsQtd,
+    // setProductsQtd,
+  }), [cartProducts]);
 
   return (
     <CartContext.Provider value={ contextValues }>
