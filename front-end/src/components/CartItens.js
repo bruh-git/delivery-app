@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { CartContext } from '../context/cart';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 import ButtonTotal from './totalButton';
@@ -17,7 +17,7 @@ export default function CartItem() {
   useEffect(() => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartProducts]);
-
+  console.log(cartProducts, 'cartProducts');
   return (
     <div>
       <table>
@@ -52,8 +52,9 @@ export default function CartItem() {
                     {product.name}
                   </td>
                   <td
-                    data-testid={ `customer_checkout__element-order-table-quantity-
-                  ${index}` }
+                    data-testid={
+                      `customer_checkout__element-order-table-quantity-${index}`
+                    }
                   >
                     {product.quantity}
                   </td>
@@ -66,19 +67,17 @@ export default function CartItem() {
                   </td>
                   <td
                     data-testid={
-                      `customer_checkout__element-order-table-sub-total
-                      -${index}`
+                      `customer_checkout__element-order-table-sub-total-${index}`
                     }
                   >
                     { (product.price * product.quantity)
                       .toFixed(2).replace('.', ',') }
                   </td>
-                  <td
-                    data-testid={
-                      `customer_checkout__element-order-table-remove-${index}`
-                    }
-                  >
+                  <td>
                     <button
+                      data-testid={
+                        `customer_checkout__element-order-table-remove-${index}`
+                      }
                       type="button"
                       onClick={ () => removeItem(product.id) }
                     >
