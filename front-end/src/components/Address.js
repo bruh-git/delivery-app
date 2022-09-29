@@ -1,40 +1,99 @@
-import PropTypes from 'prop-types';
-import React, { useEffect } from 'react';
-/* import addressContext from '../context/address'; */
+import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { getLocalStorage } from '../utils/localStorage';
+import { getSellers, postOrders } from '../service/api';
+import { CartContext } from '../context/cart';
 
 function Address() {
-/*   const { Role, Employee, setEmployee } = useContext(addressContext); */
+  const history = useHistory();
+  const [address, setAddress] = useState({ deliveryAddress: '',
+    deliveryNumber: '',
+    seller: 0 });
+  const { fullPrice } = useContext(CartContext);
+  const [sellers, setSellers] = useState([]);
 
   useEffect(() => {
-    // tem que pegar os vendedores na rota, se tiver
+    const { token } = getLocalStorage('user');
+    const fetchSellers = async () => {
+      const result = await getSellers({ token });
+      setSellers(result.data);
+    };
+    fetchSellers();
   }, []);
 
-  const handleClickOrders = async (event) => {
-    event.preventDefault();
-    /* const response = await getOrders(id); */
-
-    const { history } = props;
-    history.push('/customer/orders');
+  const handleClickOrders = async () => {
+    const { id } = getLocalStorage('user');
+    const products = getLocalStorage('cartList')
+      .map((elem) => ({ id: elem.id, quantity: elem.quantity }));
+    const saleData = {
+      sale: {
+        userId: Number(id),
+        sellerId: Number(address.seller),
+        // sellerId: Number()
+        totalPrice: Number(fullPrice.replace(',', '.')),
+        deliveryAddress: address.deliveryAddress,
+        deliveryNumber: address.deliveryNumber,
+      },
+      products,
+    };
+    const sale = await postOrders(saleData);
+    console.log(sale);
+    history.push(`/customer/orders/${sale.saleId}`);
   };
 
-  /*   const handleChange = (event) => {
-    setEmployee(event.target.value);
-  }; */
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+    setAddress({ ...address, [name]: value });
+  };
 
   return (
     <div>
       <div>
-        <select
-          data-testid="customer_checkout__select-seller"
-          /*  onChange={ handleChange } */
+        <label
+          htmlFor="seller"
         >
-          <option value="{ Employee }">P. Vendedora Responsável:</option>
-          <option value="{ Role.name }">
-            name
-          </option>
-        </select>
-        <input data-testid="customer_checkout__input-address" />
-        <input data-testid="customer_checkout__input-address-number" />
+          P. Vendedora Responsável:
+          <select
+            data-testid="customer_checkout__select-seller"
+            id="seller"
+            name="seller"
+            value={ address.seller }
+            onChange={ (({ target: { value } }) => (
+              setAddress({ ...address, seller: value })
+            )) }
+          >
+            <option value="default">Selecione</option>
+            {
+              sellers.length > 0
+              && sellers.map((elem) => (
+                <option key={ elem.id } value={ elem.id }>{ elem.name }</option>
+              ))
+            }
+
+          </select>
+        </label>
+        <label htmlFor="address">
+          Endereço
+          <input
+            name="deliveryAddress"
+            value={ address.deliveryAddress }
+            data-testid="customer_checkout__input-address"
+            placeholder="Coloque seu endereço aqui!"
+            id="address"
+            onChange={ (e) => handleChange(e) }
+          />
+        </label>
+        <label htmlFor="number">
+          Número
+          <input
+            name="deliveryNumber"
+            value={ address.deliveryNumber }
+            data-testid="customer_checkout__input-address-number"
+            placeholder="Coloque seu número aqui!"
+            id="number"
+            onChange={ (e) => handleChange(e) }
+          />
+        </label>
       </div>
       <div>
         <button
@@ -48,10 +107,5 @@ function Address() {
     </div>
   );
 }
-Address.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
 
 export default Address;

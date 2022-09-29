@@ -19,7 +19,7 @@ class LoginService {
 
   static async login(email, password) {
     const user = await User.findOne({
-      attributes: ['email', 'password', 'role', 'name'],
+      attributes: ['id', 'email', 'password', 'role', 'name'],
       where: { email },
     });
 
@@ -29,9 +29,9 @@ class LoginService {
     if (!checkPassword) throw new CustomError('Email or password incorrect', 403);
 
     const token = jwtService.createToken({ email, name: user.name });
-    const { role } = user;
+    const { role, id } = user;
 
-    return { token, role, name: user.name, email };
+    return { id, token, role, name: user.name, email };
   }
 }
 

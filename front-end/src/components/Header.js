@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { getLocalStorage } from '../utils/localStorage';
+import { CartContext } from '../context/cart';
 
 export default function Header() {
   const history = useHistory();
   const user = getLocalStorage('user');
+  const { setCartProducts } = useContext(CartContext);
+
   console.log(user, 'header');
 
+  const resetContext = () => {
+    setCartProducts([]);
+  };
+
   const handleLogOut = () => {
-    // event.preventDefault();
-    localStorage.removeItem('user');
+    localStorage.clear();
+    resetContext();
     history.push('/login');
   };
 

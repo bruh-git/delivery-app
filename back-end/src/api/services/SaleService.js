@@ -91,6 +91,14 @@ class SaleService {
 
     return order;
   }
+
+  static async findAllSellers() {
+    const sellers = await User.findAll({
+      where: { role: 'seller' },
+      attributes: ['id', 'name'],
+    });
+    return sellers;
+  }
 }
 
 module.exports = SaleService;

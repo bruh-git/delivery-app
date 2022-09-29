@@ -3,6 +3,7 @@ const SaleService = require('../services/SaleService');
 class SaleController {
   static async create(req, res) {
     const { authorization } = req.headers;
+    console.log(authorization);
     await SaleService.validateToken(authorization);
     await SaleService.validateBody(req.body);
     const sale = await SaleService.create(req.body);
@@ -16,6 +17,13 @@ class SaleController {
     const orderSerialized = await SaleService.serialize(order);
     return res.status(200).json(orderSerialized);
   }
+
+  static async findAllSellers(req, res) {
+    const { authorization } = req.headers;
+    await SaleService.validateToken(authorization);
+    const sellers = await SaleService.findAllSellers();
+    return res.status(200).json(sellers);
+  } 
 }
 
 module.exports = SaleController;

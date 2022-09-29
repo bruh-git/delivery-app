@@ -20,8 +20,9 @@ function Login(props) {
       setInvalidUserMessage(true);
     } else {
       // console.log(response.data, 'login');
-      const { name, role, email, token } = response.data;
+      const { name, role, email, token, id } = response.data;
       setLocalStorage('user', {
+        id,
         name,
         email,
         role,
