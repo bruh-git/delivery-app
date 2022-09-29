@@ -26,11 +26,7 @@ function Register(props) {
         role,
         token,
       });
-      /*       setLocalStorage('name', name);
-      setLocalStorage('email', email);
-      setLocalStorage('role', role);
-      setLocalStorage('token', token);
-      setDisablebutton(false); */
+
       const { history } = props;
       history.push('/customer/products');
     }

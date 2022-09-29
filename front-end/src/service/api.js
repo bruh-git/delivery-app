@@ -19,3 +19,10 @@ export const getProducts = async ({ token }) => instance.get(
 ).catch(
   (err) => err.response.data,
 );
+
+export const getOrders = async (id) => instance.get(
+  '/orders/:id',
+  { id },
+).catch(
+  (err) => err.response.data,
+);
