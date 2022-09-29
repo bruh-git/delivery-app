@@ -23,7 +23,7 @@ export default function Header() {
           MEUS PEDIDOS
         </li>
         <li data-testid="customer_products__element-navbar-user-full-name">
-          { user.name }
+          {user.name}
         </li>
         <li>
           <button

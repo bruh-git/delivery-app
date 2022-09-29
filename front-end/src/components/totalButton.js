@@ -27,7 +27,11 @@ export default function ButtonTotal() {
         onClick={ handleClickCart }
         disabled={ fullPrice === '0,00' }
       >
-        <span data-testid="customer_products__checkout-bottom-value">{ fullPrice }</span>
+        <span data-testid="customer_products__checkout-bottom-value">
+          Total: R$
+          {' '}
+          { fullPrice }
+        </span>
       </button>
     </div>
   );

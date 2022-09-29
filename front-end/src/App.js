@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-max-depth */
 import React from 'react';
+/* import { AddressContext } from './context/address'; */
 import AuthProvider from './context/auth';
 import CartProvider from './context/cart';
 import ProductProvider from './context/products';
