@@ -26,9 +26,11 @@ export default function Header() {
         { user.role === 'customer'
           && (
             <div>
-              <li data-testid="customer_products__element-navbar-link-products">
-                PRODUTOS
-              </li>
+              <Link to="/customer/products">
+                <li data-testid="customer_products__element-navbar-link-products">
+                  PRODUTOS
+                </li>
+              </Link>
               <Link to="/customer/orders">
                 <li data-testid="customer_products__element-navbar-link-orders">
                   MEUS PEDIDOS
@@ -53,6 +55,7 @@ export default function Header() {
             data-testid="customer_products__element-navbar-link-logout"
             type="button"
             onClick={ handleLogOut }
+            style={ { margin: '50px', padding: '15px' } }
           >
             Sair
 

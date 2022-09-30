@@ -11,7 +11,9 @@ function Login(props) {
   const [loggedUser, setLoggedUser] = useState(false);
   const {
     userEmail, setEmail, password, setPassword, disableButton } = useContext(AuthContext);
-  const flow = { customer: '/customer/products', seller: '/seller/orders' };
+  const flow = { customer: '/customer/products',
+    seller: '/seller/orders',
+    administrator: 'admin/manage' };
 
   useEffect(() => {
     const user = getLocalStorage('user') || false;
