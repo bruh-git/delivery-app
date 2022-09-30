@@ -8,7 +8,6 @@ import { getLocalStorage } from '../utils/localStorage';
 
 function CustumerProducts() {
   const { setProducts, products } = useContext(ProductContext);
-  console.log(products, 'PAGINAaa');
 
   useEffect(() => {
     const { token } = getLocalStorage('user');

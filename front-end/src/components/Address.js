@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getLocalStorage } from '../utils/localStorage';
-import { getSellers, postOrders } from '../service/api';
 import { CartContext } from '../context/cart';
+import { getSellers, postOrders } from '../service/api';
+import { getLocalStorage } from '../utils/localStorage';
 
 function Address() {
   const history = useHistory();
@@ -29,7 +29,6 @@ function Address() {
       sale: {
         userId: Number(id),
         sellerId: Number(address.seller),
-        // sellerId: Number()
         totalPrice: Number(fullPrice.replace(',', '.')),
         deliveryAddress: address.deliveryAddress,
         deliveryNumber: address.deliveryNumber,
@@ -37,7 +36,6 @@ function Address() {
       products,
     };
     const sale = await postOrders(saleData);
-    console.log(sale);
     history.push(`/customer/orders/${sale.saleId}`);
   };
 
