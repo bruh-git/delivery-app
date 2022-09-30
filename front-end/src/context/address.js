@@ -8,8 +8,6 @@ export default function AddressProvider({ children }) {
   const [Roles, setRoles] = useState([]);
   const [Employee, setEmployee] = useState([]);
 
-  // tem que pegar a rota que retorna os funcionarios
-
   const contextValues = useMemo(() => ({
     Roles,
     setRoles,

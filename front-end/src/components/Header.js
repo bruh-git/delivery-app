@@ -1,14 +1,12 @@
 import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { getLocalStorage } from '../utils/localStorage';
 import { CartContext } from '../context/cart';
+import { getLocalStorage } from '../utils/localStorage';
 
 export default function Header() {
   const history = useHistory();
   const user = getLocalStorage('user');
   const { setCartProducts } = useContext(CartContext);
-
-  console.log(user, 'header');
 
   const resetContext = () => {
     setCartProducts([]);

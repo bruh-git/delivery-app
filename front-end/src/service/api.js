@@ -27,26 +27,14 @@ export const getOrders = async (id) => instance.get(
   (err) => err.response.data,
 );
 
-export const getSellers = async ({ token }) => instance.get(
+export const getSellers = async () => instance.get(
   '/orders/sellers',
-  { headers: {
-    authorization: token,
-  } },
-).catch(
-  (err) => err.response.data,
-);
-
-/* export const postOrders = async () => instance.post(
-  '/orders',
   { headers: {
     authorization: JSON.parse(localStorage.getItem('user')).token,
   } },
 ).catch(
   (err) => err.response.data,
-); */
-// const api = axios.create({
-//   baseURL: 'http://localhost:3001',
-// });
+);
 
 export const postOrders = async (saleData) => {
   const response = await instance({
@@ -56,6 +44,18 @@ export const postOrders = async (saleData) => {
     },
     url: '/orders',
     data: saleData,
+  });
+
+  return response.data;
+};
+
+export const getOrdersId = async (id) => {
+  const response = await instance({
+    method: 'get',
+    headers: {
+      authorization: JSON.parse(localStorage.getItem('user')).token,
+    },
+    url: `/orders/${id}`,
   });
 
   return response.data;

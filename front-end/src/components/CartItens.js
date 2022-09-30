@@ -5,7 +5,6 @@ import ButtonTotal from './totalButton';
 
 export default function CartItem() {
   const cartProducts = getLocalStorage('cartList');
-  console.log('log', cartProducts);
   const { setCartProducts } = useContext(CartContext);
 
   const removeItem = (id) => {
@@ -17,7 +16,6 @@ export default function CartItem() {
   useEffect(() => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartProducts]);
-  console.log(cartProducts, 'cartProducts');
   return (
     <div>
       <table>
