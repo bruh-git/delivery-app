@@ -19,8 +19,9 @@ function Register(props) {
       setDisablebutton(true);
     } else {
       console.log(response, 'register');
-      const { name, role, email, token } = response.data.user;
+      const { id, name, role, email, token } = response.data.user;
       setLocalStorage('user', {
+        id,
         name,
         email,
         role,

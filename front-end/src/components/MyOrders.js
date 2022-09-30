@@ -6,21 +6,30 @@ export default function MyOrders(props) {
   const { role } = localStorage.getItem('user');
 
   return (
-    <section data-testid={ `customer_products__element-order-date-${id}` }>
+    <section
+      style={ { backgroundColor: 'green', display: 'flex' } }
+      data-testid={ `customer_products__element-order-date-${id}` }
+    >
       <div className="id-order">
-        <p>Pedido</p>
+        <p data-testid={ `customer_orders__element-order-id-${id}` }>
+          Pedido
+        </p>
         <p>{ id }</p>
       </div>
       <div className="order-info">
         <div className="status">
-          <p>{ status }</p>
+          <p data-testid={ `customer_orders__element-delivery-status-${id}` }>
+            { status }
+          </p>
         </div>
         <div className="details">
           <div className="date">
-            <p>{ moment(saleDate).format('L') }</p>
+            <p data-testid={ `customer_orders__element-order-date-${id}` }>
+              { moment(saleDate).format('L') }
+            </p>
           </div>
           <div className="price">
-            <p>
+            <p data-testid={ `customer_orders__element-card-price-${id}` }>
               R$
               {' '}
               { totalPrice.replace('.', ',') }

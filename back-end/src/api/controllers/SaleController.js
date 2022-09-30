@@ -18,8 +18,6 @@ class SaleController {
     return res.status(200).json(orderSerialized);
   }
 
-  
-
   static async findAllSellers(req, res) {
     const { authorization } = req.headers;
     await SaleService.validateToken(authorization);
@@ -32,7 +30,7 @@ class SaleController {
     const { id: userId } = req.params;
     const role = await SaleService.validateToken(authorization);
     await SaleService.validateParams(userId);
-    const orders = await SaleService.findByUserId({userId, role});
+    const orders = await SaleService.findByUserId({ userId, role });
     return res.status(200).json(orders);
   } 
 }
