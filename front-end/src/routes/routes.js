@@ -20,6 +20,7 @@ function Routes() {
       <Route exact path="/customer/orders/:id" component={ ordersDetails } />
       <Route exact path="/customer/orders" component={ Orders } />
       <Route exact path="/seller/orders" component={ Orders } />
+      <Route exact path="/seller/orders/:id" component={ ordersDetails } />
     </Switch>
   );
 }
