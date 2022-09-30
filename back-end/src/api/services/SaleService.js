@@ -92,6 +92,12 @@ class SaleService {
     return order;
   }
 
+  static async findByUserId({ role, userId }) {
+    const user = role === 'customer' ? 'user_id' : 'seller_id';
+    const orders = await Sale.findAll({ where: { [user]: userId } });
+    return orders;
+  }
+
   static async findAllSellers() {
     const sellers = await User.findAll({
       where: { role: 'seller' },

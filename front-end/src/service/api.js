@@ -60,3 +60,16 @@ export const getOrdersId = async (id) => {
 
   return response.data;
 };
+
+export const getOrdersByUser = async () => {
+  const { id, token } = JSON.parse(localStorage.getItem('user'));
+  const response = await instance({
+    method: 'get',
+    url: `/orders/user/${id}`,
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return response.data;
+};

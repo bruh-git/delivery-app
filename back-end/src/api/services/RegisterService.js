@@ -23,9 +23,9 @@ class RegisterService {
     if (user) throw new CustomError('Conflict', 409);
 
     const hashPassword = md5(password).toString();
-    await User.create({ email, name, password: hashPassword, role: 'customer' });
+    const { id } = await User.create({ email, name, password: hashPassword, role: 'customer' });
     const token = JwtService.createToken({ email, name });
-    return { token, role: 'customer', name, email };
+    return { id, token, role: 'customer', name, email };
   }
 }
 

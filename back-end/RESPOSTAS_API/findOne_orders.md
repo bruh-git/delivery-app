@@ -1,5 +1,7 @@
 # GET /orders/:id
 
+Encontra uma venda a partir de seu id
+
 ## Modelo do JSON
 
   ### HEADERS

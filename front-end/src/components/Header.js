@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { CartContext } from '../context/cart';
 import { getLocalStorage } from '../utils/localStorage';
 
@@ -21,12 +21,28 @@ export default function Header() {
   return (
     <div>
       <div>
-        <li data-testid="customer_products__element-navbar-link-products">
-          PRODUTOS
-        </li>
+        { user.role === 'customer'
+          && (
+            <div>
+              <li data-testid="customer_products__element-navbar-link-products">
+                PRODUTOS
+              </li>
+              <Link to="/customer/orders">
+                <li data-testid="customer_products__element-navbar-link-orders">
+                  MEUS PEDIDOS
+                </li>
+              </Link>
+            </div>)}
+        { user.role === 'seller'
+        && (
+          <li data-testid="customer_products__element-navbar-link-orders">
+            PEDIDOS
+          </li>)}
+        { user.role === 'administrator'
+      && (
         <li data-testid="customer_products__element-navbar-link-orders">
-          MEUS PEDIDOS
-        </li>
+          GERENCIAR USUÁRIOS
+        </li>)}
         <li data-testid="customer_products__element-navbar-user-full-name">
           {user.name}
         </li>
