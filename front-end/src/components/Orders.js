@@ -2,6 +2,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { getOrdersId, getSellers } from '../service/api';
+import { getLocalStorage } from '../utils/localStorage';
 
 export default function Orders(props) {
   const { data: { match } } = props;
@@ -9,15 +10,23 @@ export default function Orders(props) {
   const [order, setOrder] = useState();
   const [fullPrice, setFullPrice] = useState();
   const [seller, setSeller] = useState('');
+  const [role, setRole] = useState();
 
-  const idName = 'customer_order_details__element-order-details-label-seller-name';
-  const idStatus = 'customer_order_details__element-order-details-label-delivery-status';
-  const idButton = 'customer_order_details__button-delivery-check';
+  const idSellerName = 'customer_order_details__element-order-details-label-seller-name';
+  const idOrder = `${role}_order_details__element-order-details-label-order-id`;
+  const idStatus = `${role}_order_details__element-order-details-label-delivery-status`;
+  const idCheckBtn = 'customer_order_details__button-delivery-check';
+  const idPrepareBtn = 'seller_order_details__button-preparing-check';
+  const idDispatchBtn = 'seller_order_details__button-dispatch-check';
+  const idDate = `${role}_order_details__element-order-details-label-order-date`;
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await getOrdersId(Number(params.id));
       setOrder(result);
+
+      const user = getLocalStorage('user');
+      if (user) setRole(user.role);
     };
     fetchData();
   }, []);
@@ -38,7 +47,6 @@ export default function Orders(props) {
       if (order) {
         const sellerFind = resultSeller.data.find((elem) => elem.id === order.sellerId);
         setSeller(sellerFind.name);
-        console.log(sellerFind, 'FOI');
       }
     };
     fetchSeller();
@@ -51,18 +59,18 @@ export default function Orders(props) {
           <div>
             <h3>Detalhes do pedido</h3>
             <h4
-              data-testid="customer_order_details__element-order-details-label-order-id"
+              data-testid={ idOrder }
             >
               { order.id }
             </h4>
             <h4
-              data-testid={ idName }
+              data-testid={ idSellerName }
             >
               P. Vend:
               { seller }
             </h4>
             <h4
-              data-testid="customer_order_details__element-order-details-label-order-date"
+              data-testid={ idDate }
             >
               { moment(order.saleDate).format('DD/MM/YYYY') }
             </h4>
@@ -71,13 +79,39 @@ export default function Orders(props) {
             >
               { order.status }
             </h4>
-            <button
-              type="button"
-              data-testid={ idButton }
-              disabled={ order.status }
-            >
-              MARCAR COMO ENTREGUE
-            </button>
+            {
+              role === 'customer'
+               && (
+                 <button
+                   type="button"
+                   data-testid={ idCheckBtn }
+                   disabled={ order.status !== 'Em Trânsito' }
+                 >
+                   MARCAR COMO ENTREGUE
+                 </button>
+               )
+            }
+            {
+              role === 'seller'
+               && (
+                 <div>
+                   <button
+                     type="button"
+                     data-testid={ idPrepareBtn }
+                     disabled={ order.status !== 'Pendente' }
+                   >
+                     PREPARAR PEDIDO
+                   </button>
+                   <button
+                     type="button"
+                     data-testid={ idDispatchBtn }
+                     disabled={ order.status !== 'Preparando' }
+                   >
+                     SAIU PARA ENTREGA
+                   </button>
+                 </div>
+               )
+            }
           </div>
         )
       }
@@ -99,35 +133,35 @@ export default function Orders(props) {
           <tr key={ index }>
             <td
               data-testid={
-                `customer_order_details__element-order-table-item-number-${index}`
+                `${role}_order_details__element-order-table-item-number-${index}`
               }
             >
               {index + 1}
             </td>
             <td
               data-testid={
-                `customer_order_details__element-order-table-name-${index}`
+                `${role}_order_details__element-order-table-name-${index}`
               }
             >
               {elem.name}
             </td>
             <td
               data-testid={
-                `customer_order_details__element-order-table-quantity-${index}`
+                `${role}_order_details__element-order-table-quantity-${index}`
               }
             >
               {elem.quantity}
             </td>
             <td
               data-testid={
-                `customer_order_details__element-order-table-unit-price-${index}`
+                `${role}_order_details__element-order-table-unit-price-${index}`
               }
             >
               { elem.price.replace('.', ',') }
             </td>
             <td
               data-testid={
-                `customer_checkout__element-order-table-sub-total-${index}`
+                `${role}_checkout__element-order-table-sub-total-${index}`
               }
             >
               { (elem.price * elem.quantity)
@@ -140,7 +174,7 @@ export default function Orders(props) {
       </table>
       <button
         type="button"
-        data-testid="customer_order_details__element-order-total-price"
+        data-testid={ `${role}_order_details__element-order-total-price` }
       >
         {fullPrice}
 

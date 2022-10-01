@@ -10,7 +10,6 @@ export default function MyOrders(props) {
   useEffect(() => {
     const user = getLocalStorage('user');
     if (user) setRole(user.role);
-    console.log(user);
   }, []);
 
   return (
