@@ -17,8 +17,11 @@ export default function MyOrders(props) {
       style={ { backgroundColor: 'green', display: 'flex' } }
       data-testid={ `${role}_products__element-order-date-${id}` }
     >
-      <div className="id-order">
-        <p data-testid={ `${role}_orders__element-order-id-${id}` }>
+      <div
+        className="id-order"
+        data-testid={ `${role}_orders__element-order-id-${id}` }
+      >
+        <p>
           Pedido
         </p>
         <p>{ id }</p>
