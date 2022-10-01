@@ -1,11 +1,75 @@
 import instance from './instance';
 
 export const loginUser = async (
-  { email, password },
-) => instance.post('/login', { email, password }).catch((err) => err.response.data);
+  { userEmail, password },
+) => instance.post('/login', {
+  email: userEmail, password }).catch((err) => err.response.data);
 
 export const registerUser = async (
-  { name, email, password },
-) => instance.post('/register', { name, email, password }).catch(
+  { userName, userEmail, password },
+) => instance.post('/register', { name: userName, email: userEmail, password }).catch(
   (err) => err.response.data,
 );
+
+export const getProducts = async ({ token }) => instance.get(
+  '/products',
+  { headers: {
+    authorization: token,
+  } },
+).catch(
+  (err) => err.response.data,
+);
+
+export const getOrders = async (id) => instance.get(
+  '/orders/:id',
+  { id },
+).catch(
+  (err) => err.response.data,
+);
+
+export const getSellers = async () => instance.get(
+  '/orders/sellers',
+  { headers: {
+    authorization: JSON.parse(localStorage.getItem('user')).token,
+  } },
+).catch(
+  (err) => err.response.data,
+);
+
+export const postOrders = async (saleData) => {
+  const response = await instance({
+    method: 'post',
+    headers: {
+      authorization: JSON.parse(localStorage.getItem('user')).token,
+    },
+    url: '/orders',
+    data: saleData,
+  });
+
+  return response.data;
+};
+
+export const getOrdersId = async (id) => {
+  const response = await instance({
+    method: 'get',
+    headers: {
+      authorization: JSON.parse(localStorage.getItem('user')).token,
+    },
+    url: `/orders/${id}`,
+  });
+
+  return response.data;
+};
+
+export const getOrdersByUser = async () => {
+  const { id, token } = JSON.parse(localStorage.getItem('user'));
+  const response = await instance({
+    method: 'get',
+    url: `/orders/user/${id}`,
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return response.data;
+};

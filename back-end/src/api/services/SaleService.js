@@ -56,6 +56,17 @@ class SaleService {
     return value;
   }
 
+  static async serialize(order) {
+    const quantities = order.products.map((el) => el.get('SaleProduct').get('quantity'));
+    quantities.forEach((_el, idx) => {
+      const { products } = order.dataValues;
+      delete products[idx].dataValues.SaleProduct;
+      products[idx].dataValues.quantity = quantities[idx];
+    });
+
+    return order;
+  }
+
   static async create({ sale, products }) {
     const result = await sequelize.transaction(async (t) => {
       const saleResult = await Sale.create({ ...sale, status: 'Pendente', transaction: t });
@@ -107,6 +118,20 @@ class SaleService {
       fields: ['status'],
     });
     if (sale[0] === 0) throw new CustomError('Not updated', 401);
+  }
+  
+  static async findByUserId({ role, userId }) {
+    const user = role === 'customer' ? 'user_id' : 'seller_id';
+    const orders = await Sale.findAll({ where: { [user]: userId } });
+    return orders;
+  }
+
+  static async findAllSellers() {
+    const sellers = await User.findAll({
+      where: { role: 'seller' },
+      attributes: ['id', 'name'],
+    });
+    return sellers;
   }
 }
 

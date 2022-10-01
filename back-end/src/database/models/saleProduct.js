@@ -12,9 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     }
   }, {
-    tableName: 'salesProducts',
+    tableName: 'sales_products',
     underscored: true,
-    modelName: 'salesProducts',
+    modelName: 'sales_products',
     timestamps: false,
   });
   
