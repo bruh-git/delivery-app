@@ -1,9 +1,17 @@
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { getLocalStorage } from '../utils/localStorage';
 
 export default function MyOrders(props) {
   const { id, status, saleDate, totalPrice, deliveryAddress, deliveryNumber } = props;
-  const { role } = localStorage.getItem('user');
+  const [role, setRole] = useState();
+
+  useEffect(() => {
+    const user = getLocalStorage('user');
+    if (user) setRole(user.role);
+    console.log(user);
+  }, []);
 
   return (
     <section
