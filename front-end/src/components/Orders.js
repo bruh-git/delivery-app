@@ -1,7 +1,7 @@
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { getOrdersId, getSellers } from '../service/api';
+import { getOrdersId, getSellers, updateStatus } from '../service/api';
 import { getLocalStorage } from '../utils/localStorage';
 
 export default function Orders(props) {
@@ -63,12 +63,16 @@ export default function Orders(props) {
             >
               { order.id }
             </h4>
-            <h4
-              data-testid={ idSellerName }
-            >
-              P. Vend:
-              { seller }
-            </h4>
+            {
+              role === 'customer' && (
+                <h4
+                  data-testid={ idSellerName }
+                >
+                  P. Vend:
+                  { seller }
+                </h4>
+              )
+            }
             <h4
               data-testid={ idDate }
             >
@@ -86,6 +90,9 @@ export default function Orders(props) {
                    type="button"
                    data-testid={ idCheckBtn }
                    disabled={ order.status !== 'Em Trânsito' }
+                   onClick={
+                     async () => updateStatus({ id: order.id, status: 'Entregue' })
+                   }
                  >
                    MARCAR COMO ENTREGUE
                  </button>
@@ -99,6 +106,9 @@ export default function Orders(props) {
                      type="button"
                      data-testid={ idPrepareBtn }
                      disabled={ order.status !== 'Pendente' }
+                     onClick={
+                       async () => updateStatus({ id: order.id, status: 'Preparando' })
+                     }
                    >
                      PREPARAR PEDIDO
                    </button>
@@ -106,6 +116,9 @@ export default function Orders(props) {
                      type="button"
                      data-testid={ idDispatchBtn }
                      disabled={ order.status !== 'Preparando' }
+                     onClick={
+                       async () => updateStatus({ id: order.id, status: 'Em Trânsito' })
+                     }
                    >
                      SAIU PARA ENTREGA
                    </button>

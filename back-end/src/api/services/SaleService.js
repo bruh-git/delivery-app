@@ -56,6 +56,14 @@ class SaleService {
     return value;
   }
 
+  static async validateParams(id) {
+      const schema = Joi.number().required();
+    
+      const { error, value } = schema.validate(id);
+      if (error) throw new CustomError(error.details[0].message, 400);
+      return value;
+  }
+
   static async serialize(order) {
     const quantities = order.products.map((el) => el.get('SaleProduct').get('quantity'));
     quantities.forEach((_el, idx) => {
@@ -66,7 +74,7 @@ class SaleService {
 
     return order;
   }
-
+  
   static async create({ sale, products }) {
     const result = await sequelize.transaction(async (t) => {
       const saleResult = await Sale.create({ ...sale, status: 'Pendente', transaction: t });
@@ -82,14 +90,6 @@ class SaleService {
     const productsIds = products.map((product) => product.id);
   
     return { saleId: result, productsIds };
-  }
-
-  static async validateParams(id) {
-      const schema = Joi.number().required();
-    
-      const { error, value } = schema.validate(id);
-      if (error) throw new CustomError(error.details[0].message, 400);
-      return value;
   }
 
   static async findOne(id) {
@@ -112,10 +112,11 @@ class SaleService {
 }
 
   static async update(id, status, role, userId) {
-    const roles = { customer: 'userId', seller: 'sellerId' };
+    const roles = { customer: 'user_id', seller: 'seller_id' };
     const sale = await Sale.update({ status }, { 
       where: { id, [roles[role]]: userId },
       fields: ['status'],
+      logging: true,
     });
     if (sale[0] === 0) throw new CustomError('Not updated', 401);
   }

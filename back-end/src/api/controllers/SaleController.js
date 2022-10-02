@@ -39,7 +39,7 @@ class SaleController {
   static async findByUserId(req, res) {
     const { authorization } = req.headers;
     const { id: userId } = req.params;
-    const role = await SaleService.validateToken(authorization);
+    const { role } = await SaleService.validateToken(authorization);
     await SaleService.validateParams(userId);
     const orders = await SaleService.findByUserId({ userId, role });
     return res.status(200).json(orders);

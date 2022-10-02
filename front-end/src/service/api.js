@@ -73,3 +73,16 @@ export const getOrdersByUser = async () => {
 
   return response.data;
 };
+
+export const updateStatus = async ({ id, status }) => {
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  console.log(id);
+  await instance({
+    method: 'patch',
+    url: '/orders',
+    headers: {
+      authorization: token,
+    },
+    data: { id, status },
+  });
+};

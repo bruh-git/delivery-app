@@ -19,12 +19,14 @@ function Orders() {
     },
     [],
   );
+
   return (
     <>
       <Header />
       {' '}
       {
-        orders.map((item, index) => (
+        orders
+        && orders.map((item, index) => (
           <Link to={ `/${role}/orders/${item.id}` } key={ item.id }>
             <MyOrders
               key={ index }
