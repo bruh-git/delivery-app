@@ -52,6 +52,12 @@ export default function Orders(props) {
     fetchSeller();
   }, [order]);
 
+  const changeStatus = async (status) => {
+    await updateStatus({ id: order.id, status });
+    const result = await getOrdersId(Number(params.id));
+    setOrder(result);
+  };
+
   return (
     <div>
       {
@@ -90,9 +96,7 @@ export default function Orders(props) {
                    type="button"
                    data-testid={ idCheckBtn }
                    disabled={ order.status !== 'Em Trânsito' }
-                   onClick={
-                     async () => updateStatus({ id: order.id, status: 'Entregue' })
-                   }
+                   onClick={ () => changeStatus('Entregue') }
                  >
                    MARCAR COMO ENTREGUE
                  </button>
@@ -106,9 +110,7 @@ export default function Orders(props) {
                      type="button"
                      data-testid={ idPrepareBtn }
                      disabled={ order.status !== 'Pendente' }
-                     onClick={
-                       async () => updateStatus({ id: order.id, status: 'Preparando' })
-                     }
+                     onClick={ () => changeStatus('Preparando') }
                    >
                      PREPARAR PEDIDO
                    </button>
@@ -116,9 +118,7 @@ export default function Orders(props) {
                      type="button"
                      data-testid={ idDispatchBtn }
                      disabled={ order.status !== 'Preparando' }
-                     onClick={
-                       async () => updateStatus({ id: order.id, status: 'Em Trânsito' })
-                     }
+                     onClick={ () => changeStatus('Em Trânsito') }
                    >
                      SAIU PARA ENTREGA
                    </button>
