@@ -86,3 +86,38 @@ export const updateStatus = async ({ id, status }) => {
     data: { id, status },
   });
 };
+
+export const adminRegister = async (data, token) => {
+  await instance({
+    method: 'post',
+    url: '/admin',
+    headers: {
+      authorization: token,
+    },
+    data: { ...data },
+  });
+};
+
+export const deleteUser = async (id) => {
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  await instance({
+    method: 'delete',
+    url: `/admin/${id}`,
+    headers: {
+      authorization: token,
+    },
+  });
+};
+
+export const getAllUsers = async () => {
+  const { token } = JSON.parse(localStorage.getItem('user'));
+  const response = await instance({
+    method: 'get',
+    url: '/admin',
+    headers: {
+      authorization: token,
+    },
+  });
+
+  return response.data;
+};
