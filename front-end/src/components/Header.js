@@ -37,9 +37,12 @@ export default function Header() {
             </div>)}
         { user.role === 'seller'
         && (
-          <li data-testid="customer_products__element-navbar-link-orders">
-            PEDIDOS
-          </li>)}
+          <Link to="/seller/orders">
+            <li data-testid="customer_products__element-navbar-link-orders">
+              PEDIDOS
+            </li>
+          </Link>
+        )}
         { user.role === 'administrator'
       && (
         <li data-testid="customer_products__element-navbar-link-orders">
