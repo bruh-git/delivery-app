@@ -35,7 +35,7 @@ export default function MyOrders(props) {
         <div className="details">
           <div className="date">
             <p data-testid={ `${role}_orders__element-order-date-${id}` }>
-              { moment(saleDate).format('L') }
+              { moment(saleDate).format('DD/MM/YYYY') }
             </p>
           </div>
           <div className="price">
