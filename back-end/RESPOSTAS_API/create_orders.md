@@ -11,7 +11,6 @@
         "totalPrice": 1.6,
         "deliveryAddress": "Rua da Fulana",
         "deliveryNumber": "404",
-        "saleDate": "1995-01-13 01:00:00"
       },
       "products": [
         {
