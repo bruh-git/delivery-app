@@ -2,25 +2,34 @@ import PropTypes from 'prop-types';
 import React, { useContext, useState } from 'react';
 import { RegisterContext } from '../context/register';
 import { registerUser } from '../service/api';
+import { setLocalStorage } from '../utils/localStorage';
 
 function Register(props) {
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
-  const { name, email, password,
+  const { userName, userEmail, password,
     setEmail, setPassword, setName,
     disableButton, setDisablebutton } = useContext(RegisterContext);
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    const response = await registerUser({ name, email, password });
+    const response = await registerUser({ userName, userEmail, password });
 
     if (response.message === 'Conflict') {
       setInvalidUserMessage(true);
       setDisablebutton(true);
     } else {
+      console.log(response, 'register');
+      const { id, name, role, email, token } = response.data.user;
+      setLocalStorage('user', {
+        id,
+        name,
+        email,
+        role,
+        token,
+      });
+
       const { history } = props;
-      setDisablebutton(false);
       history.push('/customer/products');
-      console.log(response, 'retorno registro');
     }
   };
   return (

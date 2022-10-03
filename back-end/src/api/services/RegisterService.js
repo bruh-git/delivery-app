@@ -2,6 +2,7 @@ const Joi = require('joi');
 const md5 = require('md5');
 const CustomError = require('../middlewares/CustomError');
 const { User } = require('../../database/models');
+const JwtService = require('./JwtService');
 
 class RegisterService {
   static async validateBody(data) {
@@ -22,8 +23,9 @@ class RegisterService {
     if (user) throw new CustomError('Conflict', 409);
 
     const hashPassword = md5(password).toString();
-    await User.create({ email, name, password: hashPassword, role: 'customer' });
-    // O novo usuário tem que voltar pra página de login para entrar
+    const { id } = await User.create({ email, name, password: hashPassword, role: 'customer' });
+    const token = JwtService.createToken({ email, name });
+    return { id, token, role: 'customer', name, email };
   }
 }
 
