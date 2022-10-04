@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { RegisterContext } from '../context/register';
 import { adminRegister, registerUser } from '../service/api';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 import UserList from './UserList';
 
-export default function RegisterForm(props) {
+export default function RegisterForm() {
+  const history = useHistory();
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
   const [role, setRole] = useState('customer');
   const { userName, userEmail, password,
@@ -45,14 +47,14 @@ export default function RegisterForm(props) {
         token,
       });
 
-      const { history } = props;
+      console.log(history);
       history.push('/customer/products');
     }
   };
 
   useEffect(() => {
-    const { role: userRole } = getLocalStorage('user');
-    setRole(userRole);
+    const user = getLocalStorage('user');
+    if (user) setRole(user.role);
   }, []);
 
   return (
@@ -108,7 +110,10 @@ export default function RegisterForm(props) {
       {
         invalidUserMessage ? (
           <h4
-            data-testid={ `${current[role]}__element-invalid-register` }
+            data-testid={
+              `${current[role]}__element-invalid${
+                role !== 'administrator' ? '_' : '-'}register`
+            }
           >
             Usuário já existe!
           </h4>) : ''
