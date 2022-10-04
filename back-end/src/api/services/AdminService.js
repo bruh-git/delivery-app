@@ -36,7 +36,7 @@ class AdminService {
   }
 
   static async create(name, email, password, role) {
-    const user = await User.findOne({ where: {[Op.or]: [{ email }, {name}]} });
+    const user = await User.findOne({ where: { [Op.or]: [{ email }, { name }] } });
     if (user) throw new CustomError('Conflict', 409);
 
     const hashPassword = md5(password).toString();
