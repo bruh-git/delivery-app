@@ -5,6 +5,7 @@ const loginRouter = require('./routes/loginRouter');
 const registerRouter = require('./routes/registerRouter');
 const productRouter = require('./routes/productRouter');
 const saleRouter = require('./routes/saleRouter');
+const adminRouter = require('./routes/adminRouter');
 const errorHandler = require('./middlewares/error');
 
 const app = express();
@@ -17,6 +18,7 @@ app.use('/', loginRouter);
 app.use('/', registerRouter);
 app.use('/', productRouter);
 app.use('/', saleRouter);
+app.use('/', adminRouter);
 app.use((req, res, next, err) => errorHandler(req, res, next, err));
 
 module.exports = app;
