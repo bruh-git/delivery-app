@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const Joi = require('joi');
 const md5 = require('md5');
 const CustomError = require('../middlewares/CustomError');
@@ -35,7 +36,7 @@ class AdminService {
   }
 
   static async create(name, email, password, role) {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ where: {[Op.or]: [{ email }, {name}]} });
     if (user) throw new CustomError('Conflict', 409);
 
     const hashPassword = md5(password).toString();

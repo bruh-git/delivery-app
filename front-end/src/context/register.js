@@ -7,7 +7,7 @@ export default function RegisterProvider({ children }) {
   const [userName, setName] = useState('');
   const [userEmail, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [roleRegis, setRoleRegis] = useState('');
+  const [roleRegis, setRoleRegis] = useState();
   const [disableButton, setDisablebutton] = useState(true);
 
   const contextValues = useMemo(() => ({

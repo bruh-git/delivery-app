@@ -88,14 +88,20 @@ export const updateStatus = async ({ id, status }) => {
 };
 
 export const adminRegister = async (data, token) => {
-  await instance({
-    method: 'post',
-    url: '/admin',
-    headers: {
-      authorization: token,
-    },
-    data: { ...data },
-  });
+  try {
+    const response = await instance({
+      method: 'post',
+      url: '/admin',
+      headers: {
+        authorization: token,
+      },
+      data: { ...data },
+    });
+
+    return response.data;
+  } catch (err) {
+    return err.response.data;
+  }
 };
 
 export const deleteUser = async (id) => {

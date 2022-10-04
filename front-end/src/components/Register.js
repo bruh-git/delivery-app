@@ -5,7 +5,7 @@ import { adminRegister, registerUser } from '../service/api';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 import UserList from './UserList';
 
-function RegisterForm(props) {
+export default function RegisterForm(props) {
   const [invalidUserMessage, setInvalidUserMessage] = useState(false);
   const [role, setRole] = useState('customer');
   const { userName, userEmail, password,
@@ -16,12 +16,17 @@ function RegisterForm(props) {
 
   const handleAdminRegis = async () => {
     const { token } = getLocalStorage('user');
-    await adminRegister({
+    const response = await adminRegister({
       name: userName,
       email: userEmail,
       password,
-      role: roleRegis === 'Cliente' ? 'customer' : 'seller',
+      role: roleRegis,
     }, token);
+
+    if (response.message === 'Conflict') {
+      setInvalidUserMessage(true);
+      setDisablebutton(true);
+    }
   };
 
   const handleRegister = async () => {
@@ -81,10 +86,11 @@ function RegisterForm(props) {
           <select
             data-testid="admin_manage__select-role"
             onChange={ ({ target: { value } }) => setRoleRegis(value) }
+            required
           >
             <option value="default">Selecione</option>
             {
-              ['Vendedor', 'Cliente'].map((elem, index) => (
+              ['customer', 'seller'].map((elem, index) => (
                 <option key={ index } value={ elem }>{elem}</option>
               ))
             }
@@ -102,7 +108,7 @@ function RegisterForm(props) {
       {
         invalidUserMessage ? (
           <h4
-            data-testid={ `${current[role]}__element-invalid_register` }
+            data-testid={ `${current[role]}__element-invalid-register` }
           >
             Usuário já existe!
           </h4>) : ''
@@ -119,5 +125,3 @@ RegisterForm.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
 };
-
-export default RegisterForm;
